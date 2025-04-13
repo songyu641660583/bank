@@ -136,6 +136,9 @@
 			goBack(){
 				uni.navigateBack()
 			},
+			handleSubmit(){
+				
+			},
 			handleBlur(type) {
 				if (type === 'remark') {
 					this.remarkFocus = false
@@ -522,4 +525,5 @@
 
 
 	}
+
 </style>

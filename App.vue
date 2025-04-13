@@ -7,14 +7,11 @@
 			}
 		},
 		onLaunch: function() {
-			console.warn('当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！')
-			console.log('App Launch')
-			console.log('load')
 			uni.getSystemInfo({
 				success: (res) => {
 					
 					this.statusBarHeight = res.statusBarHeight
-					this.bottomBarHeight = res.platform === 'h5' ? 50 : 48; // h5 50, Android 48px
+					// this.bottomBarHeight = res.platform === 'h5' ? 50 : 48; // h5 50, Android 48px
 				}
 			})
 		},
@@ -28,12 +25,9 @@
 </script>
 
 <style lang="scss">
-	/*每个页面公共css */
 	@import '@/uni_modules/uni-scss/index.scss';
-	/* #ifndef APP-NVUE */
 	@import '@/static/customicons.css';
 
-	// 设置整个项目的背景色
 	page {
 		background-color: #fff;
 	}
@@ -62,6 +56,5 @@
 	.flex-align-center {
 		display: flex;
 		align-items: center;
-		
 	}
 </style>

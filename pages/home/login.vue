@@ -67,7 +67,7 @@
 		<uni-popup ref="accountPopup">
 			<view class="account-pop" :style="{height: `calc(100vh - ${statusBarHeight || 30}px)`}">
 				<view class="my-account-head flex-between">
-					<view class="flex-between">
+					<view class="flex-between" @click="handleAccountInfo">
 						<text> 我的账户</text>
 						<image class="arrow" src="@/static/right-icon.png" mode="aspectFit"></image>
 					</view>
@@ -123,9 +123,9 @@
 	export default {
 		created() {
 			const app = getApp()
-			console.log('app.bottomBarHeight', app)
 			this.statusBarHeight = app.statusBarHeight
 			this.bottomBarHeight = app.bottomBarHeight
+			console.log('this.bottomBarHeight', this.bottomBarHeight)
 		},
 		data() {
 			return {
@@ -195,6 +195,11 @@
 			handleToZhuanzhang(){
 				uni.navigateTo({
 					url: '/pages/account/chooseAccount'
+				});
+			},
+			handleAccountInfo(){
+				uni.navigateTo({
+					url: '/pages/account/accountInfo'
 				});
 			}
 		}
@@ -716,4 +721,5 @@
 
 
 	}
+
 </style>

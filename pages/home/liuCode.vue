@@ -46,7 +46,7 @@
 	}
 </script>
 
-<style style="scss">
+<style lang="scss">
 	.lou-code {
 		display: flex;
 		flex-direction: column;
@@ -114,4 +114,5 @@
 			
 		}
 	}
+
 </style>

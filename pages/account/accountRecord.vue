@@ -2,7 +2,7 @@
 	<view class="moeny-record">
 		<uni-nav-bar title="交易记录" :style="{paddingTop: statusBarHeight + 'px', flex: 'none'}">
 			<template #left>
-				<view class="nav-left">
+				<view class="nav-left" @click="goBack">
 					<image src="@/static/ref-left-arrow.png" mode="widthFix"></image>
 				</view>
 			</template>
@@ -31,10 +31,10 @@
 							<text class="value">
 								{{monthItem.date}}
 							</text>
-							<text class="length flex-between">
+							<view class="length flex-between">
 								<text>{{monthItem.data?.length || 0}}</text>
 								<image :style="{opacity:monthItem.data?.length? 1: 0 }" :class="{show:monthItem.show }"  class="arrow" src="@/static/ref-left-arrow.png" mode="widthFix"></image>
-							</text>
+							</view>
 						</view>
 						
 						<view class="account-record-day" v-if="monthItem.show" v-for="(dayItem, dayIndex) in monthItem.data" :key="dayIndex">
@@ -77,6 +77,9 @@
 			}
 		},
 		methods: {
+			goBack() {
+				uni.navigateBack()
+			},
 			handleMonthClick(yearIndex,monthIndex){
 				if(!this.record[yearIndex].data[monthIndex].data.length) return
 				this.record[yearIndex].data[monthIndex]['show'] = !this.record[yearIndex].data[monthIndex]['show']
@@ -230,4 +233,5 @@
 			}
 		}
 	}
+
 </style>

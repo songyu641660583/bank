@@ -128,7 +128,8 @@
 					</view>
 
 					<uni-forms-item name="account">
-						<view class="input-top-label" :style="{'opacity': (accountFocus || formData.accountNumber) ? 1: 0 }">
+						<view class="input-top-label"
+							:style="{'opacity': (accountFocus || formData.accountNumber) ? 1: 0 }">
 							收款账户号码</view>
 						<uni-easyinput ref="accountInput" :clearable="false" @blur="handleBlur('account')"
 							@focus="handleFocus('account')" type="text" v-model="formData.accountNumber"
@@ -218,8 +219,8 @@
 				</view>
 			</view>
 		</uni-popup>
-	
-	
+
+
 		<uni-popup ref="currencyPopup">
 			<view class="account-pop currency"
 				:style="{marginTop: (statusBarHeight || 30) + 'px',height: `calc(100vh - ${statusBarHeight || 30}px)`}">
@@ -293,13 +294,13 @@
 					bank: ''
 				},
 				isShowMyListMoney: false,
-				myAccountIndex: 0,
+				myAccountIndex: -1,
 				myAccountList,
 				recentAccountList,
 				registrationAccountList,
 				currencyList,
 				bankList,
-				tabIndex: 1,
+				tabIndex: 0,
 				putTabList: [{
 						name: '联络人'
 					},
@@ -337,7 +338,7 @@
 		},
 
 		methods: {
-			goBack(){
+			goBack() {
 				uni.navigateBack()
 			},
 			handleBlur(type) {
@@ -383,6 +384,9 @@
 			},
 			handleSubmit() {
 				if (this.disabled) return
+				uni.navigateTo({
+					url: '/pages/account/writeMoney'
+				})
 			},
 			handlePutItemRecentClick(index) {
 				this.putAccount = recentAccountList[index]
@@ -420,7 +424,7 @@
 				this.putAccount = {
 					...this.formData
 				}
-						this.handleClosePop('putPopup')
+				this.handleClosePop('putPopup')
 
 			}
 		}
@@ -518,8 +522,9 @@
 			.is-disabled {
 				background-color: #fff !important;
 
-				
+
 			}
+
 			.uni-input-input {
 				color: #333;
 				font-size: 28rpx;
@@ -1015,4 +1020,5 @@
 			color: #C53455;
 		}
 	}
+
 </style>
