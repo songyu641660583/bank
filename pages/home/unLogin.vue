@@ -6,7 +6,7 @@
 			<view class="bg2"></view>
 			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
 			<view class="header-content">
-				<uni-nav-bar leftWidth="190px" rightWidth="230px" backgroundColor="transparent" :border="false">
+				<uni-nav-bar leftWidth="200px" rightWidth="230px" backgroundColor="transparent" :border="false">
 					<template #left>
 						<view class="login-logo">
 							<image src="@/static/login-white.png" mode="widthFix"></image>
@@ -43,10 +43,11 @@
 </template>
 
 <script>
-	import img1 from '/static/zhuanzhang.png'
-	import img2 from '/static/huobiduihuan.png'
-	import img3 from '/static/huobiduihuan.png'
-	import img4 from '/static/maimaizhengquan.png'
+	import img1 from '/static/options-icon1.png'
+	import img2 from '/static/options-icon2.png'
+	import img3 from '/static/options-icon3.png'
+	import img4 from '/static/options-icon4.png'
+	import img5 from '/static/options-icon5.png'
 	export default {
 		created(){
 			const app = getApp()
@@ -57,11 +58,11 @@
 		data() {
 			return {
 				options: [{
-						url: img1,
+						url: img2,
 						name: '转账/转数块'
 					},
 					{
-						url: img1,
+						url: img5,
 						name: '扫码取款'
 					},
 					{
@@ -69,7 +70,7 @@
 						name: '货币兑换'
 					},
 					{
-						url: img1,
+						url: img5,
 						name: '买卖证券'
 					},
 				]
@@ -135,7 +136,7 @@
 
 			.login-logo {
 				image {
-					width: 320rpx;
+					width: 390rpx;
 					// height: 92px;
 
 					// mix-blend-mode: multiply;
@@ -161,7 +162,7 @@
 				bottom: 0;
 				top: 0;
 				z-index: 0;
-				clip-path: polygon(0 0, 100% 0, 100% 85%, 0 85%);
+				// clip-path: polygon(0 0, 100% 0, 100% 85%, 0 85%);
 				// clip-path: path('M0,0 L500,0 L300,170 C300,200 0,200 0,170 Z');
 
 			}
@@ -195,8 +196,8 @@
 						justify-content: center;
 
 						image {
-							width: 50rpx;
-							height: 50rpx;
+							width: 250rpx;
+							height: 250rpx;
 							mix-blend-mode: multiply;
 						}
 					}

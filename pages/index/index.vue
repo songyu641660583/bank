@@ -1,8 +1,6 @@
 <template>
-	<view class="container">
-		<view class="exam">sadf</view>
-		<view @click="handleClick" class="intro">本项目已包含uni ui组件，无需import和注册，可直接使用。在代码区键入字母u，即可通过代码助手列出所有可用组件。光标置于组件名称处按F1，即可查看组件文档。</view>
-		<text class="intro">详见22：</text>
+	<view class="index-page">
+		<image src="@/static/index.png" mode="widthFix"></image>
 	</view>
 </template>
 
@@ -13,20 +11,26 @@
 				href: 'https://uniapp.dcloud.io/component/README?id=uniui'
 			}
 		},
-		methods: {
-			handleClick(){
+		mounted(){
+			setTimeout(() => {
 				uni.switchTab({
-					url: '/pages/login/login'
+					url: '/pages/home/index'
 				});
-			}
+			}, 1000)
 		}
 	}
 </script>
 
 <style>
-	.container {
-		padding: 20px;
-		font-size: 14px;
-		line-height: 24px;
+	.index-page {
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 76rpx;
+		image {
+			margin-bottom: 40%;
+			width: 100%;
+		}
 	}
 </style>

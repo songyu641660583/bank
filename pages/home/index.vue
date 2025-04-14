@@ -12,7 +12,7 @@
 		components: {homeLogin, homeUnlogin},
 		data() {
 			return {
-				isLogin: true
+				isLogin: false
 			}
 		},
 		methods: {

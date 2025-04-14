@@ -62,12 +62,12 @@
 					<view class="info-account-date">实时</view>
 				</view>
 			</view>
-			<view class="info-content-item flex-between">
+			<view class="info-content-item flex-between" style="border-top:1px solid #DEDEDE;padding-top: 32rpx;align-items: center;">
 				<view class="info-content-title">
 					金额
 				</view>
 				<view class="info-content-account">
-					<view class="account-info-balance" style="margin-top: -54rpx;">
+					<view class="account-info-balance" >
 						<text class="type">{{transferInfo.type}}</text>
 						<text class="value"> {{transferInfo.money}} </text>
 						<text class="decimal">.{{transferInfo.decimal}}</text>

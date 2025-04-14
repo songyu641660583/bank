@@ -3,16 +3,17 @@
 		<view class="header">
 			<uni-nav-bar backgroundColor="transparent" :border="false"
 				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar>
-			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFit"></image>
+			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
 			<view class="header-content">
-				<uni-nav-bar leftWidth="180px" :border="false">
+				<uni-nav-bar leftWidth="180px" right-width="140px" :border="false">
 					<template #left>
 						<view class="login-logo">
 							<image src="@/static/login-logo.png" mode="widthFix"></image>
 						</view>
 					</template>
 					<template #right>
-						<view class="nav-right">
+						<view class="nav-right flex-align-center">
+							<image style="margin-right:20rpx;width: 52rpx;height: 52rpx" src="@/static/home-icon3.png" mode="widthFix"></image>
 							<image src="@/static/lingdang-icon.png" mode="widthFix"></image>
 						</view>
 					</template>
@@ -31,7 +32,7 @@
 				</view>
 			</view>
 			<view class="options">
-				<view class="options-item" v-for="(item, index) in options">
+				<view class="options-item" v-for="(item, index) in options" @click="handleOptClick(item.page)">
 					<view class="options-item-img">
 						<image :src="item.url" mode="aspectFit"></image>
 					</view>
@@ -116,10 +117,11 @@
 	import {
 		myAccountInfo
 	} from '../../data/data.js'
-	import img1 from '/static/zhuanzhang.png'
-	import img2 from '/static/huobiduihuan.png'
-	import img3 from '/static/huobiduihuan.png'
-	import img4 from '/static/maimaizhengquan.png'
+	import img1 from '/static/options-icon1.png'
+	import img2 from '/static/options-icon2.png'
+	import img3 from '/static/options-icon3.png'
+	import img4 from '/static/options-icon4.png'
+	import img5 from '/static/options-icon5.png'
 	export default {
 		created() {
 			const app = getApp()
@@ -131,22 +133,23 @@
 				myAccountInfo,
 				options: [{
 						url: img1,
-						name: '转账/转数块'
+						name: '转账/转数块',
+						page: '/pages/account/chooseAccount' 
 					},
 					{
-						url: img1,
+						url: img2,
 						name: '登记抽奖'
 					},
 					{
-						url: img1,
+						url: img3,
 						name: '信用卡现金分期'
 					},
 					{
-						url: img1,
+						url: img4,
 						name: '分期贷款'
 					},
 					{
-						url: img1,
+						url: img5,
 						name: '货币兑换'
 					},
 				],
@@ -184,6 +187,13 @@
 			}
 		},
 		methods: {
+			handleOptClick(url){
+				if(!url) return
+				uni.navigateTo({
+					url
+				});
+				
+			},
 			handleShowAccount(type, posi) {
 				this.$refs[type].open(posi || 'bottom')
 
@@ -227,7 +237,8 @@
 
 			.nav-right {
 				image {
-					width: 24px;
+					width: 36rpx;
+					height: 36rpx;
 
 					// mix-blend-mode: multiply;
 				}
@@ -245,7 +256,7 @@
 			.bg {
 				width: 100%;
 				position: absolute;
-				left: 0;
+				left: 0%;
 				right: 0;
 				bottom: 0;
 				top: 0;
@@ -391,8 +402,8 @@
 						justify-content: center;
 
 						image {
-							width: 50rpx;
-							height: 50rpx;
+							width: 250rpx;
+							height: 250rpx;
 							mix-blend-mode: multiply;
 						}
 					}
