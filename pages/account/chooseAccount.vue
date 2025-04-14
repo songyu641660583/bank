@@ -294,7 +294,7 @@
 					bank: ''
 				},
 				isShowMyListMoney: false,
-				myAccountIndex: -1,
+				myAccountIndex: 0,
 				myAccountList,
 				recentAccountList,
 				registrationAccountList,
@@ -335,6 +335,9 @@
 				},
 				deep: true
 			}
+		},
+		mounted(){
+			this.handleMyAccountListClick(0)
 		},
 
 		methods: {
@@ -384,6 +387,13 @@
 			},
 			handleSubmit() {
 				if (this.disabled) return
+				// 存到本地账户信息
+				localStorage.setItem('payerAccount', JSON.stringify({
+					...this.myAccount
+				}))
+				localStorage.setItem('payeeAccount', JSON.stringify({
+					...this.putAccount
+				}))
 				uni.navigateTo({
 					url: '/pages/account/writeMoney'
 				})

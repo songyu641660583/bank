@@ -11,7 +11,7 @@
 				success: (res) => {
 					
 					this.statusBarHeight = res.statusBarHeight
-					// this.bottomBarHeight = res.platform === 'h5' ? 50 : 48; // h5 50, Android 48px
+					this.bottomBarHeight = res.platform === 'h5' ? 50 : 48; // h5 50, Android 48px
 				}
 			})
 		},

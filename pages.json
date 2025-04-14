@@ -60,6 +60,27 @@
 			{
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/account/accountLimit",
+			"style" : 
+			{
+		     	"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/account/accountConfirm",
+			"style" : 
+			{
+					"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/account/transfeRresult",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

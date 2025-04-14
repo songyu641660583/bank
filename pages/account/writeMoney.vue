@@ -130,6 +130,9 @@
 					this.remarkDisabled = !(newValue.remark && newValue.message)
 				},
 				deep: true
+			},
+			'sendValue'(newValue){
+				this.disabled = !newValue.length
 			}
 		},
 		methods: {
@@ -137,6 +140,10 @@
 				uni.navigateBack()
 			},
 			handleSubmit(){
+				if(this.disabled) return
+				uni.navigateTo({
+					url: '/pages/account/accountLimit'
+				});
 				
 			},
 			handleBlur(type) {
@@ -314,7 +321,6 @@
 				font-style: normal;
 				font-weight: 400;
 				line-height: 84rpx;
-				/* 100% */
 				color: #666;
 			}
 

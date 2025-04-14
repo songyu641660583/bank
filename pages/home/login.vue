@@ -1,5 +1,5 @@
 <template>
-	<view class="home-login" :style="{paddingBottom: bottomBarHeight + 'px'}">
+	<view class="home-login" :style="{paddingBottom: (bottomBarHeight + 50) + 'px'}">
 		<view class="header">
 			<uni-nav-bar backgroundColor="transparent" :border="false"
 				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar>
@@ -125,7 +125,6 @@
 			const app = getApp()
 			this.statusBarHeight = app.statusBarHeight
 			this.bottomBarHeight = app.bottomBarHeight
-			console.log('this.bottomBarHeight', this.bottomBarHeight)
 		},
 		data() {
 			return {
@@ -217,7 +216,9 @@
 	}
 
 	.home-login {
+		width: 100vw;
 		min-height: 100vh;
+		overflow-x: hidden;
 
 		.header {
 			position: relative;

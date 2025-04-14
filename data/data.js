@@ -6,7 +6,8 @@ export const myAccountInfo = {
 		name: '港元储蓄账户',
 		accountNumber: '012-581-2-053983-7',
 		balance: '213',
-		decimal: '22'
+		decimal: '22',
+		userName: 'TANG UAA'
 	}
 }
 // 我的提款账户列表
@@ -14,13 +15,15 @@ export const myAccountList = [{
 		name: '港元储蓄账户',
 		accountNumber: '012-581-2-053983-7',
 		moneyTypeText: '港元',
-		money: '213.22'
+		money: '213.22',
+	userName: 'TANG UAA'
 	},
 	{
 		name: '外汇宝账户',
 		accountNumber: '012-581-2-053984-0',
 		moneyTypeText: '美元',
-		money: '5.00'
+		money: '5.00',
+		userName: 'TANG UAA'
 	},
 ]
 // 最近收款人列表
