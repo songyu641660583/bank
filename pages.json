@@ -81,6 +81,13 @@
 			{
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/account/currencyExchange",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

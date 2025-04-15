@@ -24,7 +24,7 @@
 			<view class="title">输入转账金额</view>
 			<view>
 				<uni-forms-item name="sendValue">
-					<uni-easyinput type="digit" placeholder="0.00" :clearable="false" v-model="sendValue">
+					<uni-easyinput type="digit" @blur="handleIptBlur" placeholder="0.00" :clearable="false" v-model="sendValue">
 						<template #left>
 							<view class="input-place">港元</view>
 						</template>
@@ -139,6 +139,20 @@
 			goBack(){
 				uni.navigateBack()
 			},
+			handleIptBlur(){
+				let [integer, decimal] = this.sendValue.split('.')
+				if(!decimal) {
+					this.sendValue = this.sendValue + '.00'
+					return
+				} 
+				else if(decimal && decimal.length === 1) {
+					this.sendValue = integer + '.' + decimal + '0'
+					return
+				}else if (decimal && decimal.length > 2) {
+					this.sendValue = integer + '.' +decimal.substr(0, 2)
+					return
+				}
+			},
 			handleSubmit(){
 				if(this.disabled) return
 				uni.navigateTo({
@@ -219,7 +233,6 @@
 			font-style: normal;
 			font-weight: 400;
 			line-height: 32rpx;
-			/* 133.333% */
 			text-align: right;
 		}
 
