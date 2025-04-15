@@ -48,8 +48,25 @@ export const registrationAccountList = [{
 		accountNumber: '117392621'
 	},
 ]
+// 主页我的账户最近交易记录
+export const recentRecord = [
+	{
+		date: '2024/09/05',
+		recordType: '转账交易',
+		accountNumber: '1224093242342',
+		text1: 'FPS/FAN',
+		text2: 'D********/',
+		money: '- 港元 177,300',
+		decimal: '00'
+		
+	}
+]
 
 
+
+
+
+// 汇率转换 USD-HKD 美元转-港币
 export const currencyExChange = {
 	'USD-HKD': {
 		text: '1 美元 = 7.78340 港元',

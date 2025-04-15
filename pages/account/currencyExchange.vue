@@ -85,7 +85,7 @@
 							@click="isShowMyMoney = !isShowMyMoney">{{isShowMyMoney ? '隐藏' : '显示'}}</text>
 					</view>
 				</view>
-				<view class="remark">备注</view>
+				<!-- <view class="remark">备注</view> -->
 				<view class="choose-submit" :class="{disabled: disabled}" @click="handleSubmit">
 					继续
 				</view>

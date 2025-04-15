@@ -30,7 +30,7 @@
 				登入
 			</view>
 			<view class="options">
-				<view class="options-item" v-for="(item, index) in options">
+				<view class="options-item" v-for="(item, index) in options" @click="handleLogin">
 					<view class="options-item-img">
 						<image :src="item.url" mode="aspectFit"></image>
 					</view>
@@ -92,6 +92,9 @@
 		},
 		methods: {
 			handleLogin() {
+				uni.redirectTo({
+					url: '/pages/login/login'
+				})
 
 			}
 		}

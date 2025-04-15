@@ -15,6 +15,10 @@
 				isLogin: false
 			}
 		},
+		mounted(){
+			console.log(localStorage.getItem('isLogin') === '1')
+			this.isLogin = 	localStorage.getItem('isLogin') === '1'
+		},
 		methods: {
 			
 		}

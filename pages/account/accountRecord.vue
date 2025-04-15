@@ -13,7 +13,7 @@
 			</template>
 		</uni-nav-bar>
 		<view class="content">
-			<view class="account-info flex-between">
+			<view class="account-info flex-between" @click="handleShowAccount('accountPopup')">
 				<view class="account-left">
 					<view>{{myAccountInfo.hk.name}}</view>
 					<view>{{myAccountInfo.hk.accountNumber}}</view>
@@ -56,13 +56,30 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup ref="accountPopup">
+			<view class="account-pop"
+				:style="{marginTop: (statusBarHeight || 30) + 'px',minHeight: `${statusBarHeight || 30}px`}">
+				<view class="my-account-head">
+					<text class="cancel" @click="handleClosePop('accountPopup')">取消</text>
+					<text>交易账户</text>
+				</view>
+				<view class="pop-account-item flex-between" :class="{active: myAccountInfo.hk.accountNumber === item.accountNumber}" v-for="(item, index) in myAccountList" :key="index">
+					<view class="pop-account-item-info">
+						<view class="text1">{{item.name}}</view>
+						<view class="text2">{{item.accountNumber}}</view>
+					</view>
+					<image src="@/static/ref-left-arrow.png" mode="widthFix"></image>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import {
 		myAccountInfo,
-		record
+		record,
+		myAccountList
 	} from '../../data/data.js'
 	import { deepCopy } from '../../utils/util.js'
 	export default {
@@ -73,12 +90,20 @@
 		data() {
 			return {
 				myAccountInfo,
+				myAccountList,
 				record: deepCopy(record)
 			}
 		},
 		methods: {
 			goBack() {
 				uni.navigateBack()
+			},
+			handleShowAccount(type, posi) {
+				this.$refs[type].open(posi || 'bottom')
+			
+			},
+			handleClosePop(type) {
+				this.$refs[type].close()
 			},
 			handleMonthClick(yearIndex,monthIndex){
 				if(!this.record[yearIndex].data[monthIndex].data.length) return
@@ -105,6 +130,54 @@
 		.uni-navbar--border {
 			border-bottom-color: rgba(0, 0, 0, 0.4) !important;
 		}
+		.account-pop {
+			display: flex;
+			flex-direction: column;
+			background-color: #fff;
+			box-sizing: border-box;
+			padding-bottom: 200rpx;
+			.my-account-head {
+				position: relative;
+				text-align: center;
+				
+				padding: 20rpx 32rpx;
+				justify-content: center;
+				color: #333;
+				font-size: 30rpx;
+				.cancel {
+					position: absolute;
+					left: 32rpx;
+					font-size: 26rpx;
+					margin-right: auto;
+					color: #C53455;
+				}
+			
+				image {
+					width: 48rpx;
+					height: 48rpx;
+				}
+			}
+			.pop-account-item {
+				padding: 32rpx;
+				font-size: 28rpx;
+				color: #333;
+				&.active {
+					background-color: #e4b8c2;
+					image{
+						display: block;
+					}
+				}
+				image {
+					display: none;
+					width: 32rpx;
+					height: 32rpx;
+				}
+			}
+			
+			
+		
+		}
+		
 
 		.content {
 			display: flex;

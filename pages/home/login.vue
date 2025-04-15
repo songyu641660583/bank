@@ -1,10 +1,12 @@
 <template>
 	<view class="home-login" :style="{paddingBottom: (bottomBarHeight + 50) + 'px'}">
 		<view class="header">
-			<uni-nav-bar backgroundColor="transparent" :border="false"
+			<uni-nav-bar  :border="false"
 				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar>
 			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
+				<image class="bg-white" src="@/static/home-top-bg-white.png" mode="widthFix"></image>
 			<view class="header-content">
+				
 				<uni-nav-bar leftWidth="180px" right-width="140px" :border="false">
 					<template #left>
 						<view class="login-logo">
@@ -93,12 +95,22 @@
 					<view class="account-record">
 						<view class="account-record-title">最近交易记录</view>
 						<view class="account-record-content">
-							<view class="account-record-content-noData">
+							<view  v-if="recentRecord.length">
+								<view class="record-item flex-between" v-for="(item, index) in recentRecord" :key="index">
+									<view class="record-item-info">
+										<view class="record-date">{{item.date}}<text>{{item.recordType}}</text></view>
+										<view class="record-name">{{item.text1}} {{item.text2}}</view>
+										<view class="record-account-number">{{item.accountNumber}}</view>
+									</view>
+									<view class="record-item-value">{{item.money}}.<text>{{item.decimal}}</text></view>
+								</view>
+							</view>
+							<view class="account-record-content-noData" v-else>
 								<image src="@/static/record-kong.png" mode="aspectFit"></image>
 								<text>您没有最近交易记录。</text>
 							</view>
 						</view>
-						<view class="account-record-more">更多</view>
+						<view class="account-record-more" @click="handleAccountInfo">更多</view>
 					</view>
 					<view class="zhuanhzang-submit" @click="handleToZhuanzhang">
 						<image src="@/static/zhuanzhang-white.png" mode="aspectFit"></image>
@@ -115,7 +127,8 @@
 
 <script>
 	import {
-		myAccountInfo
+		myAccountInfo,
+		recentRecord
 	} from '../../data/data.js'
 	import img1 from '/static/options-icon1.png'
 	import img2 from '/static/options-icon2.png'
@@ -131,6 +144,7 @@
 		data() {
 			return {
 				myAccountInfo,
+				recentRecord,
 				options: [{
 						url: img1,
 						name: '转账/转数块',
@@ -150,7 +164,8 @@
 					},
 					{
 						url: img5,
-						name: '货币兑换'
+						name: '货币兑换',
+						page: '/pages/account/currencyExchange' 
 					},
 				],
 				tabIndex: 1,
@@ -216,24 +231,51 @@
 </script>
 
 <style lang="scss">
-	.uni-navbar__content {
-		background-color: rgba(0, 0, 0, 0) !important;
-	}
+	
 
-	.uni-navbar__header {
-		background-color: rgba(0, 0, 0, 0) !important;
-		padding: 0 16px !important;
-	}
+	
 
 	.home-login {
 		width: 100vw;
 		min-height: 100vh;
 		overflow-x: hidden;
+		background-color: #F8F8F8;
+		.uni-navbar__content {
+			background-color: rgba(0, 0, 0, 0) !important;
+		}
+		.uni-navbar__header {
+			background-color: transparent !important;
+			padding: 0 16px !important;
+		}
+		.record-item {
+			padding: 16rpx 32rpx 32rpx;
+			&-info {
+				color: #999;
+				font-size: 25rpx;
+				.record-date {
+					text {
+						color: #333;
+						margin-left: 4rpx;
+						font-size: 28rpx;
+					}
+				}
+			}
+			
+			&-value {
+				color: #C53455;
+				font-size: 30rpx;
+				text {
+					font-size: 24rpx;
+				}
+			}
+			
+		}
 
 		.header {
 			position: relative;
 			width: 100%;
 			height: 238px;
+			overflow: hidden;
 
 			.nav-right {
 				image {
@@ -251,6 +293,15 @@
 
 					mix-blend-mode: multiply;
 				}
+			}
+			.bg-white {
+				width: 100%;
+				height: 100rpx;
+				position: absolute;
+				left: 0%;
+				right: 0;
+				bottom: -90rpx;
+				z-index: 1;
 			}
 
 			.bg {

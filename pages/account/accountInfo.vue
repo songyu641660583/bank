@@ -13,7 +13,7 @@
 			</template>
 		</uni-nav-bar>
 		<view class="content">
-			<view class="account-info flex-between">
+			<view class="account-info flex-between" @click="handleShowAccount('accountPopup')">
 				<view class="account-left">
 					<view>{{myAccountInfo.hk.name}}</view>
 					<view>{{myAccountInfo.hk.accountNumber}}</view>
@@ -49,17 +49,45 @@
 				</view>
 			</view>
 			<view class="record-content">
-				<view class="record-noData">
+				<view  v-if="recentRecord.length">
+					<view class="record-item flex-between" v-for="(item, index) in recentRecord" :key="index">
+						<view class="record-item-info">
+							<view class="record-date">{{item.date}}<text>{{item.recordType}}</text></view>
+							<view class="record-name">{{item.text1}}</view>
+							<view class="record-account-number">{{item.text2}}{{item.accountNumber}}</view>
+						</view>
+						<view class="record-item-value">{{item.money}}.<text>{{item.decimal}}</text></view>
+					</view>
+				</view>
+				<view class="record-noData" v-else>
 					没有交易资料。
 				</view>
 			</view>
 		</view>
+		<uni-popup ref="accountPopup">
+			<view class="account-pop"
+				:style="{marginTop: (statusBarHeight || 30) + 'px',minHeight: `${statusBarHeight || 30}px`}">
+				<view class="my-account-head">
+					<text class="cancel" @click="handleClosePop('accountPopup')">取消</text>
+					<text>交易账户</text>
+				</view>
+				<view class="pop-account-item flex-between" :class="{active: myAccountInfo.hk.accountNumber === item.accountNumber}" v-for="(item, index) in myAccountList" :key="index">
+					<view class="pop-account-item-info">
+						<view class="text1">{{item.name}}</view>
+						<view class="text2">{{item.accountNumber}}</view>
+					</view>
+					<image src="@/static/ref-left-arrow.png" mode="widthFix"></image>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import {
 		myAccountInfo,
+		recentRecord,
+		myAccountList
 	} from '../../data/data.js'
 	import iconImg1 from '@/static/account-info-icon1.png'
 	import iconImg2 from '@/static/account-info-icon2.png'
@@ -75,6 +103,8 @@
 		data() {
 			return {
 				myAccountInfo,
+				recentRecord,
+				myAccountList,
 				options: [{
 						name: '转账/转数快',
 						img: iconImg1
@@ -99,6 +129,13 @@
 			}
 		},
 		methods: {
+			handleShowAccount(type, posi) {
+				this.$refs[type].open(posi || 'bottom')
+			
+			},
+			handleClosePop(type) {
+				this.$refs[type].close()
+			},
 			handleRecord(){
 				uni.navigateTo({
 					url: '/pages/account/accountRecord'
@@ -129,6 +166,78 @@
 		.uni-navbar--border {
 			border-bottom-color: rgba(0, 0, 0, 0.4) !important;
 		}
+		.account-pop {
+			display: flex;
+			flex-direction: column;
+			background-color: #fff;
+			box-sizing: border-box;
+			padding-bottom: 200rpx;
+			.my-account-head {
+				position: relative;
+				text-align: center;
+				
+				padding: 20rpx 32rpx;
+				justify-content: center;
+				color: #333;
+				font-size: 30rpx;
+				.cancel {
+					position: absolute;
+					left: 32rpx;
+					font-size: 26rpx;
+					margin-right: auto;
+					color: #C53455;
+				}
+			
+				image {
+					width: 48rpx;
+					height: 48rpx;
+				}
+			}
+			.pop-account-item {
+				padding: 32rpx;
+				font-size: 28rpx;
+				color: #333;
+				&.active {
+					background-color: #e4b8c2;
+					image{
+						display: block;
+					}
+				}
+				image {
+					display: none;
+					width: 32rpx;
+					height: 32rpx;
+				}
+			}
+			
+			
+		
+		}
+		
+		.record-item {
+			padding: 16rpx 0rpx 32rpx;
+			&-info {
+				color: #999;
+				font-size: 25rpx;
+				.record-date {
+					text {
+						color: #333;
+						margin-left: 4rpx;
+						font-size: 28rpx;
+					}
+				}
+			}
+			
+			&-value {
+				color: #C53455;
+				font-size: 30rpx;
+				text {
+					font-size: 24rpx;
+				}
+			}
+			
+		}
+		
 
 		.content {
 			display: flex;

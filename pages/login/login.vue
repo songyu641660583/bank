@@ -96,13 +96,9 @@
 
 		methods: {
 			handleSubmit() {
+				localStorage.setItem('isLogin', '1')
 				uni.switchTab({
-					url: '/pages/home/unLogin'
-				});
-			},
-			handleClick() {
-				uni.switchTab({
-					url: '/pages/login/login'
+					url: '/pages/home/index'
 				});
 			},
 			handlePlaceFocus(type) {
