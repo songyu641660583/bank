@@ -41,7 +41,9 @@
 		padding-top: calc(var(--status-bar-height) + var(--safe-area-top));
 		height: calc(44px + var(--status-bar-height) + var(--safe-area-top));
 	}
-
+	.nav-right{
+		mix-blend-mode: multiply;
+	}
 
 	.example-info {
 		font-size: 14px;

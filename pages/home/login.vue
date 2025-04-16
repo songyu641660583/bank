@@ -584,7 +584,7 @@
 			box-sizing: border-box;
 
 			.content {
-				background: url("@/static/free-icon.png") no-repeat;
+				background: url("@/static/account-bg.png") no-repeat;
 				background-size: contain;
 				background-position: 0rpx 100rpx;
 			}

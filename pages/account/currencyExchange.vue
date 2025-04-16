@@ -228,6 +228,30 @@
 				this.handleShowAccount('currencyPopup')
 			},
 			handleSubmit() {
+				if(this.disabled) return
+
+				localStorage.setItem('exchangeInfo', JSON.stringify({
+					setAccountInfo: {
+						...this.setAccountInfo,
+					},
+					getAccountInfo: {
+						...this.getAccountInfo,
+					},
+					setCurrencyInfo: {
+						...this.setCurrencyInfo,
+					},
+					getCurrencyInfo: {
+						...this.getCurrencyInfo,
+					},
+					setValue: this.setValue,
+					getValue: this.getValue,
+					rateText: this.buyComputed.text,
+					type: this.exchangeType === 'buy' ? '买入' : '卖出',
+					type2: this.exchangeType === 'buy' ? '付出' : '收取',
+				}))
+				uni.navigateTo({
+					url: '/pages/account/exchangeConfirm'
+				})
 
 			},
 			handleCloseChange() {

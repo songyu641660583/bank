@@ -1,5 +1,6 @@
 <template>
 	<view class="choose-account">
+		<loadingComponent v-if="loading"></loadingComponent>
 		<uni-nav-bar left-width="52rpx" right-width="52rpx" :border="false"
 			:style="{paddingTop: statusBarHeight + 'px', flex:'none'}">
 			<template #left>
@@ -178,8 +179,12 @@
 				<!-- 联络人 -->
 				<view v-if="tabIndex === 0">
 					<view class="search-module">
-						<image src="@/static/search-icon.png" mode="aspectFit"></image>
-						<text>账户号码/姓名/电话号码/电邮地址/FPS ID</text>
+						<uni-easyinput :clearable="false" :input-border="false" type="text" v-model="concatKeywords"
+							placeholder-class="custom-placeholder" placeholder="账户号码/姓名/电话号码/电邮地址/FPS ID">
+							<template #left>
+								<image src="@/static/search-icon.png" mode="aspectFit"></image>
+							</template>
+						</uni-easyinput>
 					</view>
 					<view class="put-account-title">最近收款人</view>
 					<view class="put-account-list">
@@ -199,7 +204,7 @@
 						<view class="put-account-item" v-for="(item, index) in registrationAccountList" :key="index"
 							@click="handlePutItemClick(index)">
 							<view class="put-account-item-in">
-								<image src="@/static/put-icon.png" mode="aspectFit"></image>
+								<image src="@/static/user-blue.png" mode="aspectFit"></image>
 								<view class="put-account-item-info">
 									<view class="put-account-item-name">{{item.name}}</view>
 									<view class="put-account-item-number">{{item.accountNumber}}</view>
@@ -229,8 +234,14 @@
 				</view>
 				<view class="my-account-title">货币选择</view>
 				<view class="search-module">
-					<image src="@/static/search-icon.png" mode="aspectFit"></image>
-					<text>请输入货币名称或货币代号，如：港元/HKD</text>
+					<!-- <image src="@/static/search-icon.png" mode="aspectFit"></image>
+					<text>请输入货币名称或货币代号，如：港元/HKD</text> -->
+					<uni-easyinput :clearable="false" :input-border="false" type="text" v-model="currencyKeywords"
+						placeholder-class="custom-placeholder" placeholder="请输入货币名称或货币代号，如：港元/HKD">
+						<template #left>
+							<image src="@/static/search-icon.png" mode="aspectFit"></image>
+						</template>
+					</uni-easyinput>
 				</view>
 				<view class="currency-list">
 					<view class="currency-item" v-for="(item, index) in currencyList" :key="index"
@@ -249,8 +260,12 @@
 				</view>
 				<view class="my-account-title">收款银行/机构</view>
 				<view class="search-module">
-					<image src="@/static/search-icon.png" mode="aspectFit"></image>
-					<text>搜寻银行编号/名称</text>
+					<uni-easyinput :clearable="false" :input-border="false" type="text" v-model="bankKeywords"
+						placeholder-class="custom-placeholder" placeholder="搜寻银行编号/名称">
+						<template #left>
+							<image src="@/static/search-icon.png" mode="aspectFit"></image>
+						</template>
+					</uni-easyinput>
 				</view>
 				<view class="currency-list">
 					<view class="currency-item" v-for="(item, index) in bankList" :key="index"
@@ -265,21 +280,30 @@
 </template>
 
 <script>
+	import loadingComponent from '../../components/loading.vue'
 	import {
 		myAccountList,
 		recentAccountList,
 		registrationAccountList,
 		currencyList,
-		bankList
+		bankList,
 	} from '../../data/data.js'
-	let currencyMyAccountIndex = 1
 	export default {
+		components: {
+			loadingComponent
+
+		},
 		onLoad() {
 			const app = getApp()
 			this.statusBarHeight = app.statusBarHeight
 		},
 		data() {
 			return {
+				bankKeywords: '',
+				currencyKeywords: '',
+				concatKeywords: '',
+				
+				loading: true,
 				disabled: true,
 				isShowMyMoney: false,
 				myAccount: {
@@ -336,7 +360,10 @@
 				deep: true
 			}
 		},
-		mounted(){
+		mounted() {
+			setTimeout(() => {
+				this.loading = false
+			}, 1500)
 			this.handleMyAccountListClick(0)
 		},
 
@@ -423,7 +450,6 @@
 				this.handleClosePop('currencyPopup')
 			},
 			handleShowCurrency(index) {
-				currencyMyAccountIndex = index
 				this.handleShowAccount('currencyPopup', 'right')
 			},
 			handleBankClick(index) {
@@ -643,6 +669,7 @@
 
 
 			.search-module {
+				overflow: hidden;
 				flex: none;
 				padding: 4rpx 16rpx;
 				margin: 30rpx 30rpx;
@@ -652,6 +679,9 @@
 				border-radius: 12rpx;
 				border: 2rpx solid #DEDEDE;
 				background: #FFF;
+				.uni-easyinput__content-input {
+					padding-left: 0rpx;
+				}
 
 				image {
 					margin-right: 16rpx;
@@ -1030,5 +1060,4 @@
 			color: #C53455;
 		}
 	}
-
 </style>

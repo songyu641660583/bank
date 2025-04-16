@@ -1,3 +1,7 @@
+export const loginAccount = {
+	'account': 'wl1994923',
+	'pwd': 'Aa258258'
+}
 // 我的账户信息
 export const myAccountInfo = {
 	'hk': {

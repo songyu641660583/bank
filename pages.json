@@ -95,6 +95,20 @@
 			{
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/account/exchangeConfirm",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/my/account",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

@@ -538,11 +538,7 @@
 				font-weight: 400;
 				line-height: 50rpx;
 			}
-
-
 		}
-
-
 	}
 
 </style>

@@ -3,7 +3,8 @@
 		<view class="header">
 			<uni-nav-bar backgroundColor="transparent" :border="false"
 				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar>
-			<view class="bg2"></view>
+				<image class="bg-white" src="@/static/home-unlogin-bg.png" mode="widthFix"></image>
+
 			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
 			<view class="header-content">
 				<uni-nav-bar leftWidth="200px" rightWidth="230px" backgroundColor="transparent" :border="false">
@@ -121,6 +122,7 @@
 			flex: auto;
 			position: relative;
 			width: 100%;
+			overflow: hidden;
 			// padding-bottom: 20%; 
 			// overflow: hidden;
 			// background-color: #fff;
@@ -145,15 +147,14 @@
 					// mix-blend-mode: multiply;
 				}
 			}
-
-			.bg2 {
-				// position: absolute;
-				// z-index: 1;
-				// width: 100%;
-				// height: 100px;
-				// bottom: 0;
-				// background-color: #fff;
-				// border-radius: 0 0 100px 100px;
+			.bg-white {
+				width: 100%;
+				height: 100rpx;
+				position: absolute;
+				left: 0%;
+				right: 0;
+				bottom: -190rpx;
+				z-index: 1;
 			}
 
 			.bg {

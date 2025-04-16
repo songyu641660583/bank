@@ -1,6 +1,7 @@
 <template>
 	<view class="login">
-		<uni-nav-bar :border="false" :style="{paddingTop: statusBarHeight + 'px'}">
+		<loadingComponent v-if="loading"></loadingComponent>
+		<uni-nav-bar :border="false" :style="{ paddingTop: statusBarHeight + 'px' }">
 			<template #left>
 				<view class="nav-left">
 					<image src="@/static/back.png" mode="widthFix"></image>
@@ -23,7 +24,8 @@
 				若您想了解手机银行操作，请浏览操作指引。
 			</view>
 			<uni-forms-item name="account">
-				<view class="input-top-label" :style="{'opacity': (accountFocus || formData.account) ? 1: 0 }">网上银行号码 /
+				<view class="input-top-label" :style="{ 'opacity': (accountFocus || formData.account) ? 1 : 0 }">网上银行号码
+					/
 					用户名称</view>
 				<uni-easyinput ref="accountInput" @blur="handleBlur('account')" @focus="handleFocus('account')"
 					type="text" v-model="formData.account" placeholder-class="custom-placeholder">
@@ -36,7 +38,7 @@
 				</uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="pwd">
-				<view class="input-top-label" :style="{'opacity': (formData.pwd || pwdFocus) ? 1: 0 }">密码</view>
+				<view class="input-top-label" :style="{ 'opacity': (formData.pwd || pwdFocus) ? 1 : 0 }">密码</view>
 				<uni-easyinput ref="pwdInput" @blur="handleBlur('pwd')" @focus="handleFocus('pwd')" type="password"
 					:passwordIcon="false" v-model="formData.pwd">
 					<template #left>
@@ -45,7 +47,7 @@
 				</uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="code">
-				<view class="input-top-label" :style="{'opacity': (formData.code || codeFocus) ? 1: 0 }">验证码</view>
+				<view class="input-top-label" :style="{ 'opacity': (formData.code || codeFocus) ? 1 : 0 }">验证码</view>
 				<uni-easyinput ref="codeInput" @blur="handleBlur('code')" @focus="handleFocus('code')" type="text"
 					v-model="formData.code">
 					<template #left>
@@ -54,16 +56,21 @@
 					<template #right>
 						<view class="code-view">
 							<image class="audio-icon" src="@/static/audio.png" mode="widthFix"></image>
-							<view class="code-img">
-								<image src="@/static/code1.png" mode="widthFix"></image>
+							<view class="code-img" @click="handleCodeNext">
+								<image :src="codeArr[codeIndex].url" mode="widthFix"></image>
 							</view>
 						</view>
 					</template>
 				</uni-easyinput>
 			</uni-forms-item>
-			<view class="error-tips" v-if="error">输入账号或密码不正确，请重新输入。</view>
-			<view class="login-submit" @click="handleSubmit">
+			<view class="error-tips" v-if="errorText">{{ errorText }}</view>
+			<view class="login-submit" @click="handleSubmit" v-if="!logining">
 				登入
+			</view>
+			<view class="login-submit logining" v-else>
+				<text>{{ showSuccess? '' : '处理中'}}</text>
+				<image v-if="showSuccess" src="@/static/success.gif" mode="widthFix"></image>
+
 			</view>
 			<view class="forget-pwd">忘记密码?</view>
 		</view>
@@ -72,14 +79,43 @@
 </template>
 
 <script>
+	import code1 from '/static/code2.png'
+	import code2 from '/static/code3.png'
+	import code3 from '/static/code4.png'
+	import code4 from '/static/code5.png'
+	import {
+		loginAccount
+	} from '../../data/data'
+	import loadingComponent from '../../components/loading.vue'
+
+	const codeArr = [{
+		url: code1,
+		value: '82rg'
+	}, {
+		url: code2,
+		value: '7knx'
+	}, {
+		url: code3,
+		value: '28w5'
+	}, {
+		url: code4,
+		value: '4pyk'
+	}]
 	export default {
+		components: {
+			loadingComponent
+		},
 		onLoad() {
 			const app = getApp()
 			this.statusBarHeight = app.statusBarHeight
 		},
 		data() {
 			return {
-				error: false,
+				loading: true,
+				logining: false,
+				showSuccess: false,
+				codeArr,
+				codeIndex: Math.ceil(Math.random() * 4),
 				accountFocus: false,
 				pwdFocus: false,
 				codeFocus: false,
@@ -88,18 +124,48 @@
 					pwd: '',
 					code: ''
 				},
+				errorText: '',
 				single: '',
 				vModelValue: 10,
 				href: 'https://uniapp.dcloud.io/component/README?id=uniui'
 			}
 		},
+		mounted() {
+			setTimeout(() => {
+				this.loading = false
+			}, 1500)
+		},
 
 		methods: {
+			handleCodeNext() {
+				if (this.codeIndex >= this.codeArr.length - 1) {
+					this.codeIndex = 0
+				} else {
+					this.codeIndex = this.codeIndex + 1
+				}
+			},
 			handleSubmit() {
+
+				if (this.formData.account !== loginAccount.account || this.formData.pwd !== loginAccount.pwd) {
+					this.errorText = '输入账号或密码不正确，请重新输入。'
+					return
+				}
+				if (codeArr[this.codeIndex].value !== this.formData.code) {
+					this.errorText = '验证码不正确，请重新输入。'
+					return
+				}
+				this.logining = true
 				localStorage.setItem('isLogin', '1')
-				uni.switchTab({
-					url: '/pages/home/index'
-				});
+				setTimeout(() => {
+					this.showSuccess = true
+				}, 3000)
+
+				setTimeout(() => {
+					uni.switchTab({
+						url: '/pages/home/index'
+					})
+				}, 4500)
+
 			},
 			handlePlaceFocus(type) {
 
@@ -137,6 +203,11 @@
 
 <style lang="scss">
 	.login {
+		height: 100vh;
+		background: url('@/static/login-bg.png') no-repeat;
+		background-size: 85% 120%;
+		background-position-x: 100%;
+		background-position-y: 20%;
 
 		.nav-left,
 		.nav-right {
@@ -163,6 +234,11 @@
 
 		.uni-navbar__header {
 			padding: 0 32rpx !important;
+			background-color: transparent !important;
+		}
+
+		.uni-navbar__content {
+			background-color: transparent !important;
 		}
 
 		.forget-text {
@@ -202,6 +278,10 @@
 
 		}
 
+		.uni-easyinput__content {
+			background-color: transparent !important;
+		}
+
 		.custom-placeholder {
 			color: red;
 			font-size: 52rpx !important;
@@ -237,20 +317,23 @@
 			align-items: center;
 
 			.audio-icon {
+				margin-right: 10rpx;
 				width: 36rpx;
+				height: 36rpx;
 			}
 
 			.code-img {
-				height: 40rpx;
-
 				image {
+					height: 40rpx;
+
 					width: 120rpx;
 				}
 			}
 		}
 
 		.login-submit {
-			margin-top: 50rpx;
+			position: relative;
+			margin: 50rpx auto 0;
 			display: flex;
 			width: 100%;
 			height: 96rpx;
@@ -259,9 +342,23 @@
 			gap: 16rpx;
 			flex-shrink: 0;
 			border-radius: 10000px;
-			background: #C53455;
+			background-color: #C53455;
 			color: #fff;
 			border: none;
+			transition: all 1s;
+
+			&.logining {
+				width: 96rpx;
+				transition: all 1s;
+				animation: submit 3s ease-in forwards;
+			}
+
+			image {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 78rpx;
+			}
 		}
 
 		.forget-pwd {
@@ -283,6 +380,28 @@
 			line-height: 32rpx;
 			/* 133.333% */
 			color: #C53455;
+		}
+	}
+
+
+	@keyframes submit {
+		0% {
+			width: 100%;
+		}
+
+		85% {
+			width: 100%;
+		}
+
+		95% {
+			color: #fff;
+			background-color: #C53455;
+		}
+
+		100% {
+			width: 0rpx;
+			color: transparent;
+			background-color: green !important;
 		}
 	}
 </style>
