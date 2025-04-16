@@ -46,7 +46,7 @@
 <script>
 	import img1 from '/static/options-icon1.png'
 	import img2 from '/static/options-icon2.png'
-	import img3 from '/static/options-icon3.png'
+	import img3 from '/static/options2.png'
 	import img4 from '/static/options-icon4.png'
 	import img5 from '/static/options-icon5.png'
 	export default {
@@ -63,7 +63,7 @@
 						name: '转账/转数块'
 					},
 					{
-						url: img5,
+						url: img3,
 						name: '扫码取款'
 					},
 					{

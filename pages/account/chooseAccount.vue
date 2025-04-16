@@ -164,7 +164,7 @@
 						<view class="put-account-item" v-for="(item, index) in myAccountList" :key="index"
 							@click="handlePutMyAccountItemClick(index)">
 							<view class="put-account-item-in">
-								<image src="@/static/put-icon.png" mode="aspectFit"></image>
+								<image src="@/static/user-blue.png" mode="aspectFit"></image>
 								<view class="put-account-item-info">
 									<view class="put-account-item-name">{{item.name}}</view>
 									<view class="put-account-item-number">{{item.accountNumber}}</view>
@@ -204,7 +204,7 @@
 						<view class="put-account-item" v-for="(item, index) in registrationAccountList" :key="index"
 							@click="handlePutItemClick(index)">
 							<view class="put-account-item-in">
-								<image src="@/static/user-blue.png" mode="aspectFit"></image>
+								<image src="@/static/put-icon.png" mode="aspectFit"></image>
 								<view class="put-account-item-info">
 									<view class="put-account-item-name">{{item.name}}</view>
 									<view class="put-account-item-number">{{item.accountNumber}}</view>

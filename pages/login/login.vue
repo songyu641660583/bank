@@ -115,7 +115,7 @@
 				logining: false,
 				showSuccess: false,
 				codeArr,
-				codeIndex: Math.ceil(Math.random() * 4),
+				codeIndex: Math.floor(Math.random() * 4),
 				accountFocus: false,
 				pwdFocus: false,
 				codeFocus: false,
@@ -204,10 +204,10 @@
 <style lang="scss">
 	.login {
 		height: 100vh;
-		background: url('@/static/login-bg.png') no-repeat;
-		background-size: 85% 120%;
+		background: url('@/static/login.png') no-repeat;
+		background-size: 150% 120%;
 		background-position-x: 100%;
-		background-position-y: 20%;
+		background-position-y: 118%;
 
 		.nav-left,
 		.nav-right {
@@ -336,7 +336,7 @@
 			margin: 50rpx auto 0;
 			display: flex;
 			width: 100%;
-			height: 96rpx;
+			height: 80rpx;
 			justify-content: center;
 			align-items: center;
 			gap: 16rpx;

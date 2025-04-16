@@ -1,8 +1,8 @@
 <template>
-	<view class="home-login" :style="{paddingBottom: (bottomBarHeight + 50) + 'px'}">
+	<view class="home-login" :style="{paddingBottom: (bottomBarHeight + 50) + 'px',paddingTop: statusBarHeight + 'px'}">
 		<view class="header">
-			<uni-nav-bar  :border="false"
-				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar>
+			<!-- <uni-nav-bar  :border="false"
+				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar> -->
 			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
 				<image class="bg-white" src="@/static/home-top-bg-white.png" mode="widthFix"></image>
 			<view class="header-content">
@@ -15,7 +15,7 @@
 					</template>
 					<template #right>
 						<view class="nav-right flex-align-center">
-							<image style="margin-right:20rpx;width: 52rpx;height: 52rpx" src="@/static/home-icon3.png" mode="widthFix"></image>
+							<!-- <image style="margin-right:20rpx;width: 52rpx;height: 52rpx" src="@/static/home-icon3.png" mode="widthFix"></image> -->
 							<image src="@/static/lingdang-icon.png" mode="widthFix"></image>
 						</view>
 					</template>
@@ -233,20 +233,20 @@
 <style lang="scss">
 	
 
-	
+	.uni-navbar__content {
+		background-color: rgba(0, 0, 0, 0) !important;
+	}
+	.uni-navbar__header {
+		background-color: transparent !important;
+		padding: 0 16px !important;
+	}
 
 	.home-login {
 		width: 100vw;
 		min-height: 100vh;
 		overflow-x: hidden;
 		background-color: #F8F8F8;
-		.uni-navbar__content {
-			background-color: rgba(0, 0, 0, 0) !important;
-		}
-		.uni-navbar__header {
-			background-color: transparent !important;
-			padding: 0 16px !important;
-		}
+	
 		.record-item {
 			padding: 16rpx 32rpx 32rpx;
 			&-info {
