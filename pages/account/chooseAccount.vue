@@ -302,7 +302,7 @@
 				bankKeywords: '',
 				currencyKeywords: '',
 				concatKeywords: '',
-				
+
 				loading: true,
 				disabled: true,
 				isShowMyMoney: false,
@@ -415,12 +415,19 @@
 			handleSubmit() {
 				if (this.disabled) return
 				// 存到本地账户信息
-				localStorage.setItem('payerAccount', JSON.stringify({
-					...this.myAccount
-				}))
-				localStorage.setItem('payeeAccount', JSON.stringify({
-					...this.putAccount
-				}))
+				uni.setStorage({
+					key: 'payerAccount',
+					data: JSON.stringify({
+						...this.myAccount
+					})
+				});
+				uni.setStorage({
+					key: 'payeeAccount',
+					data: JSON.stringify({
+						...this.putAccount
+					})
+				});
+				
 				uni.navigateTo({
 					url: '/pages/account/writeMoney'
 				})
@@ -679,6 +686,7 @@
 				border-radius: 12rpx;
 				border: 2rpx solid #DEDEDE;
 				background: #FFF;
+
 				.uni-easyinput__content-input {
 					padding-left: 0rpx;
 				}

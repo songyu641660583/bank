@@ -34,7 +34,7 @@
 				</view>
 			</view>
 			<view class="options flex-between">
-				<view class="options-item" v-for="(item, index) in options">
+				<view class="options-item" v-for="(item, index) in options" :key="index"  @click="handleOptClick(item.page)">
 					<view class="options-item-img">
 						<image :src="item.img" mode="aspectFit"></image>
 					</view>
@@ -76,7 +76,7 @@
 						<view class="text1">{{item.name}}</view>
 						<view class="text2">{{item.accountNumber}}</view>
 					</view>
-					<image src="@/static/ref-left-arrow.png" mode="widthFix"></image>
+					<image src="@/static/zhengque.png" mode="widthFix"></image>
 				</view>
 			</view>
 		</uni-popup>
@@ -93,7 +93,7 @@
 	import iconImg2 from '@/static/account-info-icon2.png'
 	import iconImg3 from '@/static/account-info-icon3.png'
 	import iconImg4 from '@/static/account-info-icon4.png'
-	import iconImg5 from '@/static/account-info-icon5.png'
+	import iconImg5 from '@/static/account-info-icon6.png'
 
 	export default {
 		onLoad() {
@@ -107,11 +107,13 @@
 				myAccountList,
 				options: [{
 						name: '转账/转数快',
-						img: iconImg1
+						img: iconImg1,
+						page: '/pages/account/chooseAccount' 
 					},
 					{
 						name: '兑换货币',
-						img: iconImg2
+						img: iconImg2,
+						page: '/pages/account/currencyExchange' 
 					},
 					{
 						name: '缴付账单',
@@ -144,6 +146,13 @@
 			goBack() {
 				uni.navigateBack()
 			},
+			handleOptClick(url){
+				if(!url) return
+				uni.navigateTo({
+					url
+				});
+				
+			},
 
 		}
 	}
@@ -164,7 +173,7 @@
 		}
 
 		.uni-navbar--border {
-			border-bottom-color: rgba(0, 0, 0, 0.4) !important;
+			border-bottom-color: rgba(0, 0, 0, 0.1) !important;
 		}
 		.account-pop {
 			display: flex;
@@ -198,7 +207,7 @@
 				font-size: 28rpx;
 				color: #333;
 				&.active {
-					background-color: #e4b8c2;
+					background-color: #F4DDDE;
 					image{
 						display: block;
 					}
@@ -301,7 +310,7 @@
 			.record-head {
 				padding: 32rpx;
 				color: #333;
-				font-size: 24rpx;
+				font-size: 26rpx;
 				font-style: normal;
 				font-weight: 500;
 				line-height: 32rpx;
@@ -370,7 +379,7 @@
 				background: #fff;
 				height: 96rpx;
 				color: #333;
-				font-size: 24rpx;
+				font-size: 28rpx;
 				font-style: normal;
 				font-weight: 500;
 				line-height: 32rpx;

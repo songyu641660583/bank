@@ -119,8 +119,18 @@
 			}
 		},
 		mounted(){
-			this.payerAccount = localStorage.getItem('payerAccount') && JSON.parse(localStorage.getItem('payerAccount')) || {}
-			this.payeeAccount = localStorage.getItem('payeeAccount') && JSON.parse(localStorage.getItem('payeeAccount')) || {}
+			uni.getStorage({
+			  key: 'payerAccount',
+			  success: (res) => {
+				  this.payerAccount = res.data && JSON.parse(res.data) || {}
+			  },
+			});
+			uni.getStorage({
+			  key: 'payeeAccount',
+			  success: (res) => {
+				  this.payeeAccount = res.data && JSON.parse(res.data) || {}
+			  },
+			});
 		},
 		methods: {
 			goBack() {

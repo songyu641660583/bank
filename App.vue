@@ -41,8 +41,8 @@
 		padding-top: calc(var(--status-bar-height) + var(--safe-area-top));
 		height: calc(44px + var(--status-bar-height) + var(--safe-area-top));
 	}
-	.nav-right{
-		mix-blend-mode: multiply;
+	.nav-right,.nav-left{
+		mix-blend-mode: multiply !important;
 	}
 
 	.example-info {

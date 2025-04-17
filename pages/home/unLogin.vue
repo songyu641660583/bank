@@ -1,10 +1,9 @@
 <template>
-	<view class="home-unlogin">
+	<view class="home-unlogin" :style="{paddingTop: statusBarHeight + 'px'}">
 		<view class="header">
-			<uni-nav-bar backgroundColor="transparent" :border="false"
-				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar>
-				<image class="bg-white" src="@/static/home-unlogin-bg.png" mode="widthFix"></image>
-
+			<!-- <uni-nav-bar backgroundColor="transparent" :border="false"
+				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar> -->
+			<image class="bg-white" src="@/static/radius.png" mode="widthFix"></image>
 			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
 			<view class="header-content">
 				<uni-nav-bar leftWidth="200px" rightWidth="230px" backgroundColor="transparent" :border="false">
@@ -31,7 +30,7 @@
 				登入
 			</view>
 			<view class="options">
-				<view class="options-item" v-for="(item, index) in options" @click="handleLogin">
+				<view class="options-item" v-for="(item, index) in options" @click="handleLogin" :key="index">
 					<view class="options-item-img">
 						<image :src="item.url" mode="aspectFit"></image>
 					</view>
@@ -47,10 +46,9 @@
 	import img1 from '/static/options-icon1.png'
 	import img2 from '/static/options-icon2.png'
 	import img3 from '/static/options2.png'
-	import img4 from '/static/options-icon4.png'
 	import img5 from '/static/options-icon5.png'
 	export default {
-		created(){
+		created() {
 			const app = getApp()
 			console.log('app.bottomBarHeight', app)
 			this.statusBarHeight = app.statusBarHeight
@@ -107,7 +105,7 @@
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
-		background-color: #fff;
+		background-color: #f8f8f8;
 
 		.uni-navbar__content {
 			background-color: rgba(0, 0, 0, 0) !important;
@@ -147,13 +145,14 @@
 					// mix-blend-mode: multiply;
 				}
 			}
+
 			.bg-white {
-				width: 100%;
+				width: 110%;
 				height: 100rpx;
 				position: absolute;
-				left: 0%;
+				left: -5%;
 				right: 0;
-				bottom: -190rpx;
+				bottom: -405rpx;
 				z-index: 1;
 			}
 
@@ -174,7 +173,7 @@
 
 		.content {
 			flex: none;
-			margin-top: 60rpx;
+			margin-top: 40rpx;
 			padding: 0 32rpx 40rpx;
 
 			.options {
@@ -221,7 +220,7 @@
 
 			.greeting {
 				color: #333;
-				font-size: 30rpx;
+				font-size: 32rpx;
 				font-style: normal;
 				font-weight: 400;
 				line-height: 24rpx;
@@ -244,5 +243,4 @@
 			}
 		}
 	}
-
 </style>

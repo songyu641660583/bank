@@ -1,31 +1,54 @@
 <template>
 	<view>
-		<homeLogin v-if="isLogin"></homeLogin>
-		<homeUnlogin v-else></homeUnlogin>
+		<homeLogin></homeLogin>
+		<view style="position: fixed;top: 40vh;z-index: 111;" @click="handleCeshi2">测试汇率确认页面</view>
+		<view style="position: fixed;top: 20vh;z-index: 111;" @click="handleCeshi1">测试支付确认页面</view>
 		<loadingComponent v-if="loading"></loadingComponent>
 	</view>
 </template>
 
 <script>
 	import homeLogin from './login.vue'
-	import homeUnlogin from './unLogin.vue'
-		import loadingComponent from '../../components/loading.vue'
+	import loadingComponent from '../../components/loading.vue'
 	export default {
-		components: {homeLogin, homeUnlogin,loadingComponent},
+		components: {
+			homeLogin,
+			loadingComponent
+		},
+		onLoad() {
+			uni.getStorage({
+				key: 'isLogin',
+				success: (res) => {
+					if (res.data !== '1') {
+						uni.navigateTo({
+							url: "/pages/home/unLogin"
+						})
+					}
+				},
+			});
+		},
 		data() {
 			return {
-				isLogin: true,
 				loading: true
 			}
 		},
-		mounted(){
+		mounted() {
 			setTimeout(() => {
-        this.loading =false
+				this.loading = false
 			}, 1000)
-			// this.isLogin = 	localStorage.getItem('isLogin') === '1'
+
 		},
 		methods: {
-			
+			handleCeshi1() {
+				uni.navigateTo({
+					url: '/pages/account/accountConfirm'
+				})
+			},
+			handleCeshi2() {
+				uni.navigateTo({
+					url: '/pages/account/exchangeConfirm'
+				})
+			}
 		}
 	}
 </script>

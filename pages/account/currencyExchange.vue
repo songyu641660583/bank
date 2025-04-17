@@ -1,6 +1,7 @@
 <template>
 	<view class="exchange-page">
-		<uni-nav-bar :border="false" :style="{paddingTop: statusBarHeight + 'px', flex: 'none'}">
+		<loadingComponent v-if="loading"></loadingComponent>
+		<uni-nav-bar :border="false" :style="{ paddingTop: statusBarHeight + 'px', flex: 'none' }">
 			<template #left>
 				<view class="nav-left" @click="goBack()">
 					<image src="@/static/back.png" mode="widthFix"></image>
@@ -18,18 +19,18 @@
 				<view class="exchange-type flex-align-center">
 					<view class="border"></view>
 					<text>
-						{{exchangeType === 'buy' ? '买入' : '卖出'}}
+						{{ exchangeType === 'buy' ? '买入' : '卖出' }}
 					</text>
 					<image class="arrow-icon" src="@/static/arrow-top.png" mode="widthFix"></image>
 				</view>
 			</view>
 			<view style="padding: 0 32rpx 120rpx;margin-top: 38rpx;min-height:280rpx">
 				<uni-forms-item name="setValue">
-					<uni-easyinput type="digit"  @input="handleSetInput" @blur="handleIptBlur('setValue')" placeholder="0.00" :clearable="false"
+					<uni-easyinput type="digit" @blur="handleIptBlur('setValue')" placeholder="0.00" :clearable="false"
 						v-model="setValue">
 						<template #left>
 							<view class="input-place flex-align-center" @click="handleCuurncyClick('set')">
-								<text>{{setCurrencyInfo.name || '货币'}}</text>
+								<text>{{ setCurrencyInfo.name || '货币' }}</text>
 								<image class="arrow-icon" src="@/static/arrow-top.png" mode="widthFix"></image>
 							</view>
 						</template>
@@ -39,61 +40,61 @@
 				<view class="same" v-if="false">* 所选择的货币没有可用的账户</view>
 				<view class="buy-tips1" v-if="exchangeType === 'buy' && !disabled">此金额于确认时将随汇率变动。</view>
 				<view class="account-type">
-					{{setAccountInfo.name}}
+					{{ setAccountInfo.name }}
 				</view>
 				<view class="account-number">
-					{{setAccountInfo.accountNumber}}
+					{{ setAccountInfo.accountNumber }}
 				</view>
 				<view class="account-info-text flex-between" v-if="exchangeType === 'sell' && setCurrencyInfo.name">
-					<text>可用余额：{{setCurrencyInfo.name}} {{ isShowMyMoney ? setAccountInfo.money : '********'}}</text>
+					<text>可用余额：{{ setCurrencyInfo.name }} {{ isShowMyMoney ? setAccountInfo.money : '********' }}</text>
 					<text class="showText"
-						@click="isShowMyMoney = !isShowMyMoney">{{isShowMyMoney ? '隐藏' : '显示'}}</text>
+						@click="isShowMyMoney = !isShowMyMoney">{{ isShowMyMoney ? '隐藏' : '显示' }}</text>
 				</view>
 			</view>
 			<view class="sub-content">
 				<view class="exachange-compute" v-if="!disabled">
-					{{buyComputed.text}}
+					{{ buyComputed.text }}
 				</view>
 				<view class="option-title flex-align-center">
-					<text>{{exchangeType === 'buy' ? '支付' : '收取'}}</text>
+					<text>{{ exchangeType === 'buy' ? '支付' : '收取' }}</text>
 				</view>
 				<view style="padding: 0 32rpx;margin-top: 30rpx;">
 					<uni-forms-item name="getValue">
-						<uni-easyinput type="digit" @input="handleGetInput" @blur="handleIptBlur('getValue')" placeholder="0.00"
+						<uni-easyinput type="digit" @blur="handleIptBlur('getValue')" placeholder="0.00"
 							:clearable="false" v-model="getValue">
 							<template #left>
 								<view class="input-place flex-align-center" @click="handleCuurncyClick('get')">
-									<text>{{getCurrencyInfo.name || '货币'}}</text>
+									<text>{{ getCurrencyInfo.name || '货币' }}</text>
 									<image class="arrow-icon" src="@/static/arrow-top.png" mode="widthFix"></image>
 								</view>
 							</template>
 						</uni-easyinput>
 					</uni-forms-item>
 					<view class="same" v-if="isAccountSame && currencyShowType === 'get'">* 请选择不同货币</view>
-						<view class="same" v-if="false">* 所选择的货币没有可用的账户</view>
-					<!-- <view class="buy-tips1" v-if="exchangeType === 'sell'">此金额于确认时将随汇率变动。</view> -->
+					<view class="same" v-if="false">* 所选择的货币没有可用的账户</view>
+					<view class="buy-tips1" v-if="exchangeType === 'sell' && !disabled">此金额于确认时将随汇率变动。</view>
 					<view class="account-type">
-						{{getAccountInfo.name}}
+						{{ getAccountInfo.name }}
 					</view>
 					<view class="account-number">
-						{{getAccountInfo.accountNumber}}
+						{{ getAccountInfo.accountNumber }}
 					</view>
 					<view class="account-info-text flex-between" v-if="exchangeType === 'buy' && getCurrencyInfo.name">
-						<text>可用余额：{{getCurrencyInfo.name}}
-							{{ isShowMyMoney ? getAccountInfo.money : '********'}}</text>
+						<text>可用余额：{{ getCurrencyInfo.name }}
+							{{ isShowMyMoney ? getAccountInfo.money : '********' }}</text>
 						<text class="showText"
-							@click="isShowMyMoney = !isShowMyMoney">{{isShowMyMoney ? '隐藏' : '显示'}}</text>
+							@click="isShowMyMoney = !isShowMyMoney">{{ isShowMyMoney ? '隐藏' : '显示' }}</text>
 					</view>
 				</view>
 				<!-- <view class="remark">备注</view> -->
-				<view class="choose-submit" :class="{disabled: disabled}" @click="handleSubmit">
+				<view class="choose-submit" :class="{ disabled: disabled }" @click="handleSubmit">
 					继续
 				</view>
 			</view>
 		</view>
 		<uni-popup ref="changePopup">
 			<view class="account-pop bank"
-				:style="{marginTop: (statusBarHeight || 30) + 'px',minHeight: `${statusBarHeight || 30}px`}">
+				:style="{ marginTop: (statusBarHeight || 30) + 'px', minHeight: `${statusBarHeight || 30}px` }">
 				<view class="my-account-head flex-between">
 					<image src="@/static/close-icon.png" mode="aspectFit" @click="handleCloseChange">
 					</image>
@@ -102,11 +103,11 @@
 				<view class="popup-tips1">我要</view>
 				<view class="exchange-list flex-align-center">
 					<view class="exchange-item" @click="handleChange('buy')">
-						<image src="@/static/close-icon.png" mode="aspectFit"></image>
+						<image src="@/static/buy.png" mode="aspectFit"></image>
 						<view>买入</view>
 					</view>
 					<view class="exchange-item" @click="handleChange('sell')">
-						<image src="@/static/close-icon.png" mode="aspectFit"></image>
+						<image src="@/static/sell.png" mode="aspectFit"></image>
 						<view>卖出</view>
 					</view>
 				</view>
@@ -114,7 +115,7 @@
 		</uni-popup>
 		<uni-popup ref="currencyPopup">
 			<view class="account-pop currency"
-				:style="{marginTop: (statusBarHeight || 30) + 'px',height: `calc(100vh - ${statusBarHeight || 30}px)`}">
+				:style="{ marginTop: (statusBarHeight || 30) + 'px', height: `calc(100vh - ${statusBarHeight || 30}px)` }">
 				<view class="my-account-head flex-between">
 					<image src="@/static/close-icon.png" mode="aspectFit" @click="handleClosePop('currencyPopup')">
 					</image>
@@ -127,7 +128,7 @@
 				<view class="currency-list">
 					<view class="currency-item" v-for="(item, index) in currencyExchangeList" :key="index"
 						@click="handleCurrencyClick(index)">
-						<view class="currency-item-name">{{item.name}}({{item.id}})</view>
+						<view class="currency-item-name">{{ item.name }}({{ item.id }})</view>
 					</view>
 				</view>
 			</view>
@@ -142,8 +143,15 @@
 		currencyExchangeList,
 		currencyExChange,
 	} from '../../data/data.js'
-	import { convertCurrency, convertCurrenc } from '../../utils/util.js'
+	import {
+		convertCurrency,
+		convertCurrenc
+	} from '../../utils/util.js'
+	import loadingComponent from '../../components/loading.vue'
 	export default {
+		components: {
+			loadingComponent
+		},
 		onLoad() {
 			const app = getApp()
 			this.statusBarHeight = app.statusBarHeight
@@ -155,9 +163,10 @@
 		},
 		data() {
 			return {
+				loading: false,
 				currencyExchangeList,
 				disabled: true,
-				isShowMyMoney: true,
+				isShowMyMoney: false,
 				exchangeType: 'buy',
 				setValue: '',
 				getValue: '',
@@ -207,15 +216,7 @@
 			goBack() {
 				uni.navigateBack()
 			},
-			handleSetInput(value){
-				let currencyInfo = currencyExChange[`${this.setCurrencyInfo.id}-${this.getCurrencyInfo.id}`]
-				// console.log('convertCurrency(value, currencyInfo.value)', convertCurrency(value, currencyInfo.value))
-				this.getValue = convertCurrenc(value, currencyInfo.value, this.setCurrencyInfo.id !== 'USD')
-			},
-			handleGetInput(value){
-				let currencyInfo = currencyExChange[`${this.setCurrencyInfo.id}-${this.getCurrencyInfo.id}`]
-				this.setValue = convertCurrenc(value, currencyInfo.value, this.setCurrencyInfo.id === 'USD')
-			},
+
 			handleCuurncyClick(type) {
 				this.currencyShowType = type
 				this.handleShowAccount('currencyPopup')
@@ -228,30 +229,39 @@
 				this.handleShowAccount('currencyPopup')
 			},
 			handleSubmit() {
-				if(this.disabled) return
+				if (this.disabled) return
+				this.loading = true
 
-				localStorage.setItem('exchangeInfo', JSON.stringify({
-					setAccountInfo: {
-						...this.setAccountInfo,
-					},
-					getAccountInfo: {
-						...this.getAccountInfo,
-					},
-					setCurrencyInfo: {
-						...this.setCurrencyInfo,
-					},
-					getCurrencyInfo: {
-						...this.getCurrencyInfo,
-					},
-					setValue: this.setValue,
-					getValue: this.getValue,
-					rateText: this.buyComputed.text,
-					type: this.exchangeType === 'buy' ? '买入' : '卖出',
-					type2: this.exchangeType === 'buy' ? '付出' : '收取',
-				}))
-				uni.navigateTo({
-					url: '/pages/account/exchangeConfirm'
-				})
+				uni.setStorage({
+					key: 'exchangeInfo',
+					data: JSON.stringify({
+						setAccountInfo: {
+							...this.setAccountInfo,
+						},
+						getAccountInfo: {
+							...this.getAccountInfo,
+						},
+						setCurrencyInfo: {
+							...this.setCurrencyInfo,
+						},
+						getCurrencyInfo: {
+							...this.getCurrencyInfo,
+						},
+						setValue: this.setValue,
+						getValue: this.getValue,
+						rateText: this.buyComputed.text,
+						type: this.exchangeType === 'buy' ? '买入' : '卖出',
+						type2: this.exchangeType === 'buy' ? '付出' : '收取',
+					})
+				});
+
+				setTimeout(() => {
+					this.loading = false
+					uni.navigateTo({
+						url: '/pages/account/exchangeConfirm'
+					})
+				}, 1000)
+
 
 			},
 			handleCloseChange() {
@@ -315,16 +325,26 @@
 				this.handleClosePop('currencyPopup')
 			},
 			handleIptBlur(varText) {
+				if (!this[varText]) return
 				let [integer, decimal] = this[varText].split('.')
 				if (!decimal) {
 					this[varText] = this[varText] + '.00'
-					return
 				} else if (decimal && decimal.length === 1) {
 					this[varText] = integer + '.' + decimal + '0'
-					return
 				} else if (decimal && decimal.length > 2) {
 					this[varText] = integer + '.' + decimal.substr(0, 2)
-					return
+				}
+
+				if (varText === 'setValue') {
+					let currencyInfo = currencyExChange[`${this.setCurrencyInfo.id}-${this.getCurrencyInfo.id}`]
+					this.getValue = convertCurrenc(this.setValue, currencyInfo.value, this.setCurrencyInfo.id !== 'USD', 2)
+				} else {
+					let reverse = false
+					if (this.setCurrencyInfo.id !== 'HKD') {
+						reverse = true
+					}
+					let currencyInfo = currencyExChange[`${this.setCurrencyInfo.id}-${this.getCurrencyInfo.id}`]
+					this.setValue = convertCurrenc(this.getValue, currencyInfo.value, reverse, 2)
 				}
 			},
 			handleShowAccount(type, posi) {
@@ -337,6 +357,16 @@
 			handleChange(type) {
 				this.exchangeType = type
 				this.currencyShowType = 'set'
+
+				if (this.setValue) {
+					this.setValue = ''
+					this.getValue = ''
+					this.loading = true
+					setTimeout(() => {
+						this.loading = false
+					}, 800)
+				}
+
 				if (type === 'buy' && !this.setCurrencyInfo.name) {
 
 					this.handleShowAccount('currencyPopup')
@@ -377,6 +407,7 @@
 		.uni-forms-item {
 			margin-bottom: 10rpx !important;
 		}
+
 		.remark {
 			padding: 84rpx 32rpx 0;
 			color: #5F325D;
@@ -529,7 +560,7 @@
 			}
 
 			.account-info-text {
-				color: #333;
+				color: #222;
 				font-size: 24rpx;
 				font-style: normal;
 				font-weight: 400;
@@ -547,7 +578,7 @@
 			}
 
 			.account-type {
-				color: #333;
+				color: #111;
 				font-size: 28rpx;
 				line-height: 36rpx;
 			}
@@ -653,9 +684,9 @@
 					border-radius: 32rpx;
 
 					image {
-						width: 36rpx;
-						height: 36rpx;
-						margin-bottom: 12rpx;
+						width: 56rpx;
+						height: 56rpx;
+						margin-bottom: 2rpx;
 					}
 				}
 			}

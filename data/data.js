@@ -1,3 +1,4 @@
+// 登录账号
 export const loginAccount = {
 	'account': 'wl1994923',
 	'pwd': 'Aa258258'
@@ -67,18 +68,23 @@ export const recentRecord = [
 ]
 
 
-
-
-
-// 汇率转换 USD-HKD 美元转-港币
+// 汇率转换，需要填写一对汇率 例如  USD-HKD 美元-港币 HKD-USD 港币-美元
 export const currencyExChange = {
 	'USD-HKD': {
-		text: '1 美元 = 7.78340 港元',
-		value: '7.78340'
+		text: '1 美元 = 7.73760 港元',
+		value: '7.73760'
 	},
 	'HKD-USD': {
-		text: '1 美元 = 7.78340 港元',
-		value: '7.78340'
+		text: '1 美元 = 7.73760 港元',
+		value: '7.73760'
+	},
+	'GBP-HKD': {
+		text: '1 英镑 = 10.33688 港元',
+		value: '10.33688'
+	},
+	'HKD-GBP': {
+		text: '1 英镑 = 10.33688 港元',
+		value: '10.33688'
 	}
 }
 
@@ -216,6 +222,11 @@ export const currencyExchangeList = [{
 		id: 'ZAR'
 	}
 ]
+
+export const loginInfo = {
+	'loginTime': '最后一次成功登入: (香港时间) 2025/4/16 15:55:47 (手机) 地理位置: 中国',
+	'userName': 'WENG LANG'
+}
 
 export const bankList = [{
 		name: '中国银行（香港）有限公司',

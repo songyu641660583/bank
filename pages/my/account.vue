@@ -1,6 +1,7 @@
 <template>
 	<view class="my-page">
-		<uni-nav-bar right-width="280rpx" :fixed="true" :border="false" :style="{paddingTop: statusBarHeight + 'px'}">
+		<uni-nav-bar backgroundColor="#fff" right-width="280rpx" :fixed="true" :border="false"
+			:style="{paddingTop: statusBarHeight + 'px', flex: 'none'}">
 			<template #left>
 				<view class="nav-left" @click="handleHome">
 					<image src="@/static/close-icon.png" mode="widthFix"></image>
@@ -18,13 +19,13 @@
 			<view class="info-head">
 				<view class="my-info flex-between">
 					<view class="my-info-data">
-						<view class="my-name">WENG LANG</view>
+						<view class="my-name">{{loginInfo.userName}}</view>
 						<view class="flex-align-center account-opt">
 							<text>账户概览</text>
 							<image src="@/static/right-arrow2.png" mode="widthFix"></image>
 						</view>
 					</view>
-					<view class="logout">
+					<view class="logout" @click="handleLogout">
 						登出
 					</view>
 				</view>
@@ -35,24 +36,28 @@
 			</view>
 			<view class="options-wrap" v-for="(item, index) in rowList" :key="index">
 				<view class="options-item flex-between" v-for="(optItem, optIndex) in item" :key="optIndex">
-					<view class="flex-align-center">{{optItem.name}}<text class="sub-text" v-if="optItem.subText">{{optItem.subText}}</text></view>
+					<view class="flex-align-center">{{optItem.name}}<text class="sub-text"
+							v-if="optItem.subText">{{optItem.subText}}</text></view>
 					<image v-if="optItem.showIcon" src="@/static/down-black.png" mode="widthFix"></image>
 				</view>
 			</view>
 			<view class="tips-data">
 				<view class="tips1">无障碍服务</view>
-					<view class="tips2">更多中国银行（香港）服务，请浏览：</view>
-					<view class="tips1">网上银行</view>
-					<view class="tips3" style="margin-top: 42rpx;">版本7.2.9手机</view>
-					<view class="tips3">流动保安编码：已启用</view>
-					<view class="tips3">版权所有 © 中国银行(香港)有限公司</view>
+				<view class="tips2">更多中国银行（香港）服务，请浏览：</view>
+				<view class="tips1">网上银行</view>
+				<view class="tips3" style="margin-top: 42rpx;">版本7.2.9手机</view>
+				<view class="tips3">流动保安编码：已启用</view>
+				<view class="tips3">版权所有 © 中国银行(香港)有限公司</view>
 			</view>
 		</view>
-		<view class="last-login">最后一次成功登入: (香港时间) 2025/4/16 15:55:47 (手机) 地理位置: 中国</view>
+		<view class="last-login">{{loginInfo.loginTime}}</view>
 	</view>
 </template>
 
 <script>
+	import {
+		loginInfo
+	} from '../../data/data'
 	export default {
 		onLoad() {
 			const app = getApp()
@@ -60,6 +65,7 @@
 		},
 		data() {
 			return {
+				loginInfo,
 				rowList: [
 					[{
 							name: '转账及缴费',
@@ -151,6 +157,23 @@
 			}
 		},
 		methods: {
+			handleLogout() {
+				uni.removeStorage({
+					key: 'isLogin'
+				});
+				uni.removeStorage({
+					key: 'payeeAccount'
+				});
+				uni.removeStorage({
+					key: 'exchangeInfo'
+				});
+				uni.removeStorage({
+					key: 'payerAccount'
+				});
+				uni.redirectTo({
+					url: '/pages/login/login'
+				})
+			},
 
 			handleHome() {
 				uni.switchTab({
@@ -164,13 +187,12 @@
 <style lang="scss">
 	.my-page {
 		z-index: 9999;
-		padding-bottom: 130rpx;
-		background-color: #f5f5f5;
 
 		.nav-left,
 		.nav-right {
 			image {
 				width: 48rpx;
+				mix-blend-mode: multiply;
 			}
 
 		}
@@ -192,26 +214,32 @@
 			flex: auto;
 			display: flex;
 			flex-direction: column;
+		    background-color: #f5f5f5;
+			padding-bottom: 130rpx;
 			.tips-data {
 				padding: 0 32rpx;
 				font-size: 24rpx;
+
 				.tips1 {
 					margin-top: 42rpx;
 					color: #C53455;
 				}
+
 				.tips2 {
 					margin-top: 42rpx;
 					color: #666;
 				}
+
 				.tips3 {
 					color: #666;
 				}
 			}
-			
+
 			.options-wrap {
 				padding: 0 32rpx;
 				border-top: 10rpx solid #EBEBEB;
 				background: #fff;
+
 				.options-item {
 					padding: 32rpx 0;
 					color: #333;
@@ -219,8 +247,10 @@
 					font-size: 34rpx;
 					font-style: normal;
 					font-weight: 400;
-					line-height: 100%; /* 18px */
+					line-height: 100%;
+					/* 18px */
 					border-top: 1px solid #F1F1F1;
+
 					.sub-text {
 						background-color: #C53455;
 						padding: 0rpx 24rpx;
@@ -228,11 +258,13 @@
 						font-size: 18rpx;
 						color: #fff;
 						margin-left: 12rpx;
-						
+
 					}
-					&:first-child{
+
+					&:first-child {
 						border-top: 0;
 					}
+
 					image {
 						width: 22rpx;
 					}

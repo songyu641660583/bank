@@ -1,10 +1,8 @@
 <template>
 	<view class="home-login" :style="{paddingBottom: (bottomBarHeight + 50) + 'px',paddingTop: statusBarHeight + 'px'}">
 		<view class="header">
-			<!-- <uni-nav-bar  :border="false"
-				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar> -->
 			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
-				<image class="bg-white" src="@/static/home-top-bg-white.png" mode="widthFix"></image>
+				<image class="bg-white" src="@/static/radius.png" mode="widthFix"></image>
 			<view class="header-content">
 				
 				<uni-nav-bar leftWidth="180px" right-width="140px" :border="false">
@@ -16,7 +14,7 @@
 					<template #right>
 						<view class="nav-right flex-align-center">
 							<!-- <image style="margin-right:20rpx;width: 52rpx;height: 52rpx" src="@/static/home-icon3.png" mode="widthFix"></image> -->
-							<image src="@/static/lingdang-icon.png" mode="widthFix"></image>
+							<image src="@/static/lingdang.png" mode="widthFix"></image>
 						</view>
 					</template>
 				</uni-nav-bar>
@@ -63,12 +61,13 @@
 				<view class="btn">重试</view>
 			</view>
 		</view>
-		<view class="my-account" :style="{bottom: bottomBarHeight + 'px'}" @click="handleShowAccount('accountPopup')">
+		<!-- :style="{bottom: bottomBarHeight + 'px'}" -->
+		<view class="my-account" @click="handleShowAccount('accountPopup')">
 			<image class="icon" src="@/static/arrow-top.png" mode="widthFix"></image>
 			<view class="my-account-title">我的账户</view>
 		</view>
 		<uni-popup ref="accountPopup">
-			<view class="account-pop" :style="{height: `calc(100vh - ${statusBarHeight || 30}px)`}">
+			<view class="account-pop" :style="{height: `calc(95vh - ${statusBarHeight || 30}px)`}">
 				<view class="my-account-head flex-between">
 					<view class="flex-between" @click="handleAccountInfo">
 						<text> 我的账户</text>
@@ -234,7 +233,8 @@
 	
 
 	.uni-navbar__content {
-		background-color: rgba(0, 0, 0, 0) !important;
+		background-color: transparent !important;
+		background: transparent !important;
 	}
 	.uni-navbar__header {
 		background-color: transparent !important;
@@ -274,7 +274,7 @@
 		.header {
 			position: relative;
 			width: 100%;
-			height: 238px;
+			height: 208px;
 			overflow: hidden;
 
 			.nav-right {
@@ -295,12 +295,12 @@
 				}
 			}
 			.bg-white {
-				width: 100%;
+				width: 102%;
 				height: 100rpx;
 				position: absolute;
-				left: 0%;
+				left: -1%;
 				right: 0;
-				bottom: -90rpx;
+				bottom: -335rpx;
 				z-index: 1;
 			}
 

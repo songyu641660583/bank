@@ -155,7 +155,10 @@
 					return
 				}
 				this.logining = true
-				localStorage.setItem('isLogin', '1')
+				uni.setStorage({
+				  key: 'isLogin',
+				  data: '1'
+				});
 				setTimeout(() => {
 					this.showSuccess = true
 				}, 3000)

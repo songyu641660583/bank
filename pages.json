@@ -109,6 +109,13 @@
 			{
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/account/exchangeLimit",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

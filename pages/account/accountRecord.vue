@@ -68,7 +68,7 @@
 						<view class="text1">{{item.name}}</view>
 						<view class="text2">{{item.accountNumber}}</view>
 					</view>
-					<image src="@/static/ref-left-arrow.png" mode="widthFix"></image>
+					<image src="@/static/zhengque.png" mode="widthFix"></image>
 				</view>
 			</view>
 		</uni-popup>
@@ -128,8 +128,9 @@
 		}
 
 		.uni-navbar--border {
-			border-bottom-color: rgba(0, 0, 0, 0.4) !important;
+			border-bottom-color: rgba(0, 0, 0, 0.1) !important;
 		}
+		
 		.account-pop {
 			display: flex;
 			flex-direction: column;
@@ -162,7 +163,7 @@
 				font-size: 28rpx;
 				color: #333;
 				&.active {
-					background-color: #e4b8c2;
+					background-color: #F4DDDE;
 					image{
 						display: block;
 					}
@@ -188,11 +189,12 @@
 				flex: auto;
 				overflow-y: auto;
 					scrollbar-width: none;
+					background: #F2F2F2;
 			}
 			.year-text {
-				padding: 16rpx 32rpx;
+				padding: 20rpx 32rpx;
 				color: #999;
-				font-size: 26rpx;
+				font-size: 28rpx;
 				font-style: normal;
 				font-weight: 500;
 				line-height: 32rpx;
@@ -201,12 +203,13 @@
 			}
 
 			.month-text {
-				padding: 24rpx 32rpx;
+				background-color: #fff;
+				padding: 28rpx 32rpx;
 				border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
 
 				.value {
 					color: #333;
-					font-size: 32rpx;
+					font-size: 34rpx;
 					font-style: normal;
 					font-weight: 500;
 					line-height: 36rpx;
@@ -234,7 +237,7 @@
 
 			.account-record-day {
 				padding: 24rpx 32rpx 0;
-				background-color: #F2F2F2;
+				background-color: #FBF7F6;
 				color: #999;
 				font-size: 24rpx;
 				font-style: normal;
@@ -293,7 +296,7 @@
 				background: #fff;
 				height: 96rpx;
 				color: #333;
-				font-size: 24rpx;
+				font-size: 28rpx;
 				font-style: normal;
 				font-weight: 500;
 				line-height: 32rpx;

@@ -6,8 +6,8 @@
 
 <script>
 	export default {
-		onLoad(){
-			uni.navigateTo({
+		created(){
+			uni.redirectTo({
 				url: '/pages/my/account'
 			})
 		},
