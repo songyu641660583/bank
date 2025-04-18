@@ -1,7 +1,7 @@
 <template>
-	<view class="my-page">
+	<view class="my-page" :style="{paddingTop: statusBarHeight + 'px'}">
 		<uni-nav-bar backgroundColor="#fff" right-width="280rpx" :fixed="true" :border="false"
-			:style="{paddingTop: statusBarHeight + 'px', flex: 'none'}">
+			:style="{ flex: 'none'}">
 			<template #left>
 				<view class="nav-left" @click="handleHome">
 					<image src="@/static/close-icon.png" mode="widthFix"></image>
@@ -186,6 +186,9 @@
 
 <style lang="scss">
 	.my-page {
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
 		z-index: 9999;
 
 		.nav-left,
@@ -216,6 +219,7 @@
 			flex-direction: column;
 		    background-color: #f5f5f5;
 			padding-bottom: 130rpx;
+			overflow-y: auto;
 			.tips-data {
 				padding: 0 32rpx;
 				font-size: 24rpx;

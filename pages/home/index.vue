@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<homeLogin></homeLogin>
-		<view style="position: fixed;top: 40vh;z-index: 111;" @click="handleCeshi2">测试汇率确认页面</view>
-		<view style="position: fixed;top: 20vh;z-index: 111;" @click="handleCeshi1">测试支付确认页面</view>
+<!-- 		<view style="position: fixed;top: 40vh;z-index: 111;" @click="handleCeshi2">测试汇率确认页面</view>
+		<view style="position: fixed;top: 20vh;z-index: 111;" @click="handleCeshi1">测试支付确认页面</view> -->
 		<loadingComponent v-if="loading"></loadingComponent>
 	</view>
 </template>
@@ -15,17 +15,22 @@
 			homeLogin,
 			loadingComponent
 		},
-		onLoad() {
-			uni.getStorage({
-				key: 'isLogin',
-				success: (res) => {
-					if (res.data !== '1') {
-						uni.navigateTo({
-							url: "/pages/home/unLogin"
-						})
-					}
-				},
-			});
+		created() {
+			try {
+				const value = uni.getStorageSync('isLogin');
+				console.log('value',value)
+				if (value) {
+					console.log(value);
+				}else{
+					uni.navigateTo({
+						url: "/pages/home/unLogin"
+					})
+				}
+			} catch (e) {
+				uni.navigateTo({
+					url: "/pages/home/unLogin"
+				})
+			}
 		},
 		data() {
 			return {

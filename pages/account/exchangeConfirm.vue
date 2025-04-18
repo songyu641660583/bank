@@ -26,9 +26,9 @@
 					</view>
 					<view class="info-content-account">
 						<view class="info-account-name">{{ exchangeInfo.type === '买入' ? exchangeInfo.getAccountInfo.name :
-							exchangeInfo.setAccountInfo.name}}</view>
+							exchangeInfo.setAccountInfo.name }}</view>
 						<view class="info-account-text">{{ exchangeInfo.type === '买入' ? exchangeInfo.getAccountInfo.accountNumber :
-							exchangeInfo.setAccountInfo.accountNumber}}</view>
+							exchangeInfo.setAccountInfo.accountNumber }}</view>
 					</view>
 				</view>
 				<view class="info-content-item flex-between">
@@ -37,9 +37,9 @@
 					</view>
 					<view class="info-content-account">
 						<view class="info-account-name">{{ exchangeInfo.type === '买入' ? exchangeInfo.setAccountInfo.name :
-							exchangeInfo.getAccountInfo.name}}</view>
+							exchangeInfo.getAccountInfo.name }}</view>
 						<view class="info-account-text">{{ exchangeInfo.type === '买入' ? exchangeInfo.setAccountInfo.accountNumber :
-							exchangeInfo.getAccountInfo.accountNumber}}</view>
+							exchangeInfo.getAccountInfo.accountNumber }}</view>
 					</view>
 				</view>
 			</view>
@@ -53,7 +53,7 @@
 					</view>
 					<view class="info-content-account">
 						<view class="info-account-name red" :class="{ green: exchangeInfo.type === '买入' }">
-							{{ exchangeInfo.setCurrencyInfo.name }} <text class="money">{{ exchangeInfo.setValue }}</text></view>
+							{{ exchangeInfo.setCurrencyInfo.name }} <text class="money">{{ int1 }}</text><text class="decimal">.{{ decimal1 }}</text></view>
 					</view>
 				</view>
 				<view class="info-content-item flex-between" style="align-items: center;margin-top: -0rpx;">
@@ -62,7 +62,7 @@
 					</view>
 					<view class="info-content-account">
 						<view class="info-account-name red" :class="{ green: exchangeInfo.type === '卖出' }">
-							{{ exchangeInfo.getCurrencyInfo.name }} <text class="money">{{ exchangeInfo.getValue }}</text></view>
+							{{ exchangeInfo.getCurrencyInfo.name }} <text class="money">{{ int2 }}</text><text class="decimal">.{{ decimal2 }}</text></view>
 					</view>
 				</view>
 				<view class="info-tips flex-between">
@@ -73,7 +73,7 @@
 						<view class="rateText">
 							{{ exchangeInfo.rateText }}
 						</view>
-						<view class="update-tips flex-align-center">
+						<view class="update-tips flex-align-center" v-if="false">
 							<image src="@/static/tanhao.png" mode="widthFix"></image>
 							<text> 兑换率已更新。</text>
 						</view>
@@ -83,8 +83,12 @@
 			<view class="write-tips">
 				请阅读<text>风险披露</text>及<text>备注</text>
 			</view>
-			<view class="choose-submit" @click="handleSubmit">
+			<view class="choose-submit" @click="handleSubmit" v-if="!logining">
 				同意及确认
+			</view>
+			<view class="choose-submit logining" v-else>
+				<text>{{ showSuccess ? '' : '处理中' }}</text>
+				<image v-if="showSuccess" src="@/static/success.gif" mode="widthFix"></image>
 			</view>
 
 		</view>
@@ -95,7 +99,13 @@
 export default {
 	data() {
 		return {
-			exchangeInfo: null
+			logining: false,
+			showSuccess: false,
+			exchangeInfo: null,
+			int1: '',
+			decimal1: '',
+			int2: '',
+			decimal2: '',
 		}
 	},
 	onLoad() {
@@ -103,23 +113,44 @@ export default {
 		this.statusBarHeight = app.statusBarHeight
 	},
 	mounted() {
-		
+
 		uni.getStorage({
-		  key: 'exchangeInfo',
-		  success: (res) => {
-			if (res) {
-				this.exchangeInfo = JSON.parse(res.data)
-			}
-		  },
-		});
-	
+			key: 'exchangeInfo',
+			success: (res) => {
+				if (res) {
+					this.exchangeInfo = JSON.parse(res.data)
+
+					this.int1 = this.exchangeInfo.setValue.split('.')[0]
+					this.decimal1 = this.exchangeInfo.setValue.split('.')[1]
+					this.int2 = this.exchangeInfo.getValue.split('.')[0]
+					this.decimal2 = this.exchangeInfo.getValue.split('.')[1]
+				}
+			},
+		})
+
 	},
 
 	methods: {
 		handleSubmit() {
-			uni.navigateTo({
-				url: '/pages/account/exchangeLimit'
+
+			this.logining = true
+			uni.setStorage({
+				key: 'isLogin',
+				data: '1'
 			})
+			setTimeout(() => {
+				this.showSuccess = true
+			}, 3000)
+
+			setTimeout(() => {
+				uni.navigateTo({
+					url: '/pages/account/exchangeLimit'
+				})
+
+				this.logining = false
+				this.showSuccess = false
+			}, 4500)
+
 		},
 		goBack() {
 			uni.navigateBack()
@@ -267,7 +298,7 @@ export default {
 					.info-account-name {
 						margin-bottom: 4rpx;
 						color: #333;
-						font-size: 28rpx;
+						font-size: 24rpx;
 						line-height: 36rpx;
 						/* 138.462% */
 						font-weight: 400;
@@ -277,7 +308,11 @@ export default {
 						}
 
 						.money {
-							font-size: 34rpx;
+							font-size: 38rpx;
+							font-weight: 500;
+						}
+						.decimal {
+							font-size: 24rpx;
 						}
 
 						&.green {
@@ -313,8 +348,9 @@ export default {
 
 
 		.choose-submit {
-
-			margin: auto 32rpx 40rpx;
+			position: relative;
+			margin: auto auto 40rpx;
+			width: 100%;
 			display: flex;
 			height: 96rpx;
 			justify-content: center;
@@ -325,7 +361,37 @@ export default {
 			background: #C53455;
 			color: #fff;
 			border: none;
+			&.logining {
+				width: 96rpx;
+				transition: all 1s;
+				animation: submit 3s ease-in forwards;
+			}
+			image {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 78rpx;
+			}
 		}
 	}
 }
+@keyframes submit {
+		0% {
+			width: 100%;
+		}
+
+		85% {
+			width: 100%;
+		}
+
+		95% {
+			color: #fff;
+			background-color: #C53455;
+		}
+
+		100% {
+			width: 0rpx;
+			color: transparent;
+		}
+	}
 </style>

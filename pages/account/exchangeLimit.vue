@@ -9,7 +9,7 @@
 		</uni-nav-bar>
 		<view class="content">
 			<image class="logo" src="@/static/liu-code-icon.png" mode="widthFix"></image>
-			<view class="tips1">很抱歉，账户号码错误。(RJ140)</view>
+			<view class="tips1"><view>您的指示未获接纳。请与您的开户分行联络。</view><view>(RJ030)</view></view>
 			<view class="login-submit"  @click="goBack()">
 				确认
 			</view>

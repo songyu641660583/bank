@@ -70,7 +70,6 @@
 			<view class="login-submit logining" v-else>
 				<text>{{ showSuccess? '' : '处理中'}}</text>
 				<image v-if="showSuccess" src="@/static/success.gif" mode="widthFix"></image>
-
 			</view>
 			<view class="forget-pwd">忘记密码?</view>
 		</view>

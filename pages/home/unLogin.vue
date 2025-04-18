@@ -1,10 +1,7 @@
 <template>
-	<view class="home-unlogin" :style="{paddingTop: statusBarHeight + 'px'}">
-		<view class="header">
-			<!-- <uni-nav-bar backgroundColor="transparent" :border="false"
-				:style="{paddingTop: statusBarHeight + 'px'}"></uni-nav-bar> -->
+	<view class="home-unlogin" >
+		<view class="header" :style="{paddingTop: statusBarHeight + 'px',height:`calc(100vh - 470rpx - ${statusBarHeight}px)`}">
 			<image class="bg-white" src="@/static/radius.png" mode="widthFix"></image>
-			<image class="bg" src="@/static/home-head-bg.png" mode="aspectFill"></image>
 			<view class="header-content">
 				<uni-nav-bar leftWidth="200px" rightWidth="230px" backgroundColor="transparent" :border="false">
 					<template #left>
@@ -38,7 +35,6 @@
 				</view>
 			</view>
 		</view>
-
 	</view>
 </template>
 
@@ -50,7 +46,6 @@
 	export default {
 		created() {
 			const app = getApp()
-			console.log('app.bottomBarHeight', app)
 			this.statusBarHeight = app.statusBarHeight
 			this.bottomBarHeight = app.bottomBarHeight
 		},
@@ -102,10 +97,10 @@
 
 <style lang="scss">
 	.home-unlogin {
-		display: flex;
-		flex-direction: column;
 		height: 100vh;
 		background-color: #f8f8f8;
+		overflow: hidden;
+
 
 		.uni-navbar__content {
 			background-color: rgba(0, 0, 0, 0) !important;
@@ -117,32 +112,26 @@
 		}
 
 		.header {
-			flex: auto;
 			position: relative;
 			width: 100%;
 			overflow: hidden;
-			// padding-bottom: 20%; 
-			// overflow: hidden;
-			// background-color: #fff;
-
+			background: url('@/static/unlogin-build-bg.png') no-repeat;
+			background-size: 100% 100%;
+			box-align: border-box;
 			.nav-right {
 				display: flex;
 				align-items: center;
-
+				mix-blend-mode: inherit !important;
 				image {
 					margin-left: 24rpx;
 					width: 48rpx;
-
-					// mix-blend-mode: multiply;
+					mix-blend-mode: inherit !important;
 				}
 			}
 
 			.login-logo {
 				image {
 					width: 390rpx;
-					// height: 92px;
-
-					// mix-blend-mode: multiply;
 				}
 			}
 
@@ -165,16 +154,13 @@
 				bottom: 0;
 				top: 0;
 				z-index: 0;
-				// clip-path: polygon(0 0, 100% 0, 100% 85%, 0 85%);
-				// clip-path: path('M0,0 L500,0 L300,170 C300,200 0,200 0,170 Z');
 
 			}
 		}
 
 		.content {
-			flex: none;
-			margin-top: 40rpx;
-			padding: 0 32rpx 40rpx;
+			height: 470rpx;
+			padding: 30rpx 32rpx 40rpx;
 
 			.options {
 				padding: 16px 10px 0;
@@ -213,7 +199,6 @@
 						font-style: normal;
 						font-weight: 400;
 						line-height: 24rpx;
-						/* 120% */
 					}
 				}
 			}
@@ -224,7 +209,6 @@
 				font-style: normal;
 				font-weight: 400;
 				line-height: 24rpx;
-				/* 92.308% */
 			}
 
 			.login-submit {

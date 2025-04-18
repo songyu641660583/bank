@@ -3,7 +3,6 @@
 		<uni-nav-bar title="储蓄账户" :style="{paddingTop: statusBarHeight + 'px', flex: 'none'}">
 			<template #left>
 				<view class="nav-left" @click="goBack()">
-					<image src="@/static/ref-left-arrow.png" mode="widthFix"></image>
 				</view>
 			</template>
 			<template #right>
@@ -163,7 +162,7 @@
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
-		background-color: #F2F2F2;
+		background-color: #fff;
 
 		.nav-left,
 		.nav-right {
